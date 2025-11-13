@@ -6,6 +6,9 @@ from typing import Any, Mapping
 import structlog
 
 
+# In production, we would probably want to log to a file instead of stdout to avoid cluttering the console with logs.
+# This is also a good place to add other logging configurations like logging to a database or a message queue if the service 
+# was stateless and scalable.
 def configure_logging(level: str = "INFO") -> None:
     """Configure application-wide structured logging."""
 

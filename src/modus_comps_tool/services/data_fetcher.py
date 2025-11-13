@@ -31,7 +31,7 @@ class CompanyDataFetcher:
 
     Cache Strategy:
     - In-memory cache: Fast lookups for frequently accessed tickers (shared across requests when used as singleton)
-    - Disk cache: Persists data between service restarts (24-hour TTL by default)
+    - Disk cache: Persists data between service restarts (24-hour TTL by default) by saving json files to disk. 
 
     This class should be instantiated as a singleton to maximize cache efficiency across requests.
     Uses a pluggable data provider (default: yfinance) for flexibility.

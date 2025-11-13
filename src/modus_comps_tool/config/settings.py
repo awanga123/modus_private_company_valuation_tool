@@ -11,6 +11,7 @@ class AppSettings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".env", env_nested_delimiter="__")
 
+    # Based on environment, we change the default settings for the valuation service 
     environment: Literal["local", "test", "production"] = "local"
     cache_ttl_hours: int = 24
     cache_dir: Path = Path("cache/raw")

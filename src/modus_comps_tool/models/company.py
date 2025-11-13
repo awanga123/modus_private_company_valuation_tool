@@ -47,6 +47,7 @@ class PeerSelectionConfig(BaseModel):
 
 
 class ValuationConfig(BaseModel):
+    # Only EV_REVENUE and EV_EBITDA multiples are currently supported, but easy to extend to other multiples.
     multiples: list[str] = Field(default_factory=list)
     statistics: list[str] = Field(default_factory=lambda: ["median"])
     apply_dlom: bool = False
@@ -54,8 +55,10 @@ class ValuationConfig(BaseModel):
         default_factory=lambda: settings.default_dlom_percentage,
         description="Discount for lack of marketability, applied if apply_dlom is True",
     )
-
-
+# Caller only needs to provide the target company and the revenue, 
+# the rest are optional and will use the default values if not provided. 
+# This is to simplify the API usage and make it more user friendly, all these default values 
+# are displayed and kept track in the audit trail.
 class ValuationRequest(BaseModel):
     model_config = ConfigDict(extra="ignore")
     target_company: TargetCompany

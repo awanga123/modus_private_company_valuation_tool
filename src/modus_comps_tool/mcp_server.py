@@ -20,7 +20,7 @@ from .models.valuation_multiple import DEFAULT_MULTIPLES
 from .services.valuation_service import ValuationService
 
 # Configure logging for MCP server: write to stderr to keep stdout clean for JSON-RPC
-# MCP protocol requires clean JSON-RPC output on stdout
+# MCP protocol requires clean JSON-RPC output on stdout -> found this during testing with Claude Desktop and LLM usage.
 logging.basicConfig(
     stream=sys.stderr,
     format="%(message)s",
@@ -150,7 +150,7 @@ def get_valuation(request_id: str) -> dict[str, Any]:
 
 @app.tool(
     name="list_peer_sectors",
-    description="List the available sector names from the peer universe.",
+    description="List the available sector names from the peer universe dataset to help with peer selection.",
 )
 def list_peer_sectors() -> dict[str, Any]:
     """Return the sector keys present in peer_universe.json."""

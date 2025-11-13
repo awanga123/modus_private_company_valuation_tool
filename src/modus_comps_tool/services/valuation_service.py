@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import Any, Iterable
@@ -8,8 +7,18 @@ from uuid import uuid4
 import numpy as np
 import structlog
 
-from ..models.audit import AuditCalculationStep, AuditTrail, ValuationMultipleAnalysis, ValuationResult
-from ..models.company import PeerSelectionConfig, TargetCompany, ValuationConfig, ValuationRequest
+from ..models.audit import (
+    AuditCalculationStep,
+    AuditTrail,
+    ValuationMultipleAnalysis,
+    ValuationResult,
+)
+from ..models.company import (
+    PeerSelectionConfig,
+    TargetCompany,
+    ValuationConfig,
+    ValuationRequest,
+)
 from ..models.peer_group import PeerGroup
 from ..models.valuation_multiple import ValuationMultiple
 from .audit_persistence import AuditPersistence
@@ -21,6 +30,9 @@ from .stats_engine import StatsEngine
 logger = structlog.get_logger(__name__)
 
 
+# Major context object to store the valuation context and data during the valuation process.
+# Note that the audit trail is built up throughout the steps as to keep track of what is going on sequentially 
+# which is why we include the audit trail in the context object.
 @dataclass
 class ValuationContext:
     request_id: str
@@ -195,6 +207,12 @@ class ValuationService:
         self.audit_persistence.persist(result)
         return result
 
+
+
+
+### Helper methods for the valuation service ###
+
+
     def _populate_peers(self, ctx: ValuationContext) -> dict[str, dict]:
         """Fetch financial data for every peer and enrich the peer objects in-place."""
         financials = {}
@@ -266,6 +284,8 @@ class ValuationService:
 
         analyses: dict[str, ValuationMultipleAnalysis] = {}
         for multiple, results in grouped.items():
+            # For every grouped multiple, we extract the numeric values and the raw values for the multiple in order to 
+            # calculate the statistics and the implied values.
             numeric_results, raw_values = self._extract_numeric_values(results)
             metric_value = self._target_company_metric_value(multiple, ctx.target_company)
 
@@ -276,10 +296,14 @@ class ValuationService:
                 count=len(raw_values),
             )
 
+            # If there are no raw values then there is no data to calculate the statistics and the implied values,
+            # so we create an empty analysis for this multiple.
             if not raw_values:
                 analyses[multiple.value] = self._create_empty_analysis(metric_value)
                 continue
 
+            # We detect and filter out the outliers using the z-score threshold of 2.0
+            #  and return the filtered statistics and the outliers excluded.
             summary_filtered, outliers_excluded = self._detect_and_filter_outliers(
                 raw_values, numeric_results
             )
@@ -332,11 +356,14 @@ class ValuationService:
     ) -> tuple[Any, list[str]]:
         """Detect outliers using z-score and return filtered statistics."""
         summary_all = self.stats_engine.summarize(raw_values)
+        # We get the outlier indices from the summary so we can filter out the outliers from the raw values.
         outlier_indices = set(summary_all.outlier_indices)
 
+        # We filter out the outliers from the raw values to get the filtered values.
         filtered_values = [
             value for idx, value in enumerate(raw_values) if idx not in outlier_indices
         ]
+        # We calculate the statistics for the filtered values if there are any, otherwise we use the summary of all values.
         summary_filtered = self.stats_engine.summarize(filtered_values) if filtered_values else summary_all
 
         outliers_excluded = self._format_outliers(outlier_indices, numeric_results)
@@ -358,6 +385,8 @@ class ValuationService:
     ) -> dict[str, float]:
         """Calculate implied enterprise values using mean and median multiples."""
         implied_values: dict[str, float] = {}
+        # Actually calculate the implied values using the mean and median multiples and the target metric value.
+        # This is the core of the valuation process, the implied values are the values that are implied by the multiples and the target metric value.
 
         if metric_value is None:
             return implied_values
@@ -426,7 +455,7 @@ class ValuationService:
             "valuation_date": datetime.now(timezone.utc).date().isoformat(),
         }
 
-        # Collect all implied values for mean and median separately
+        # Collect all implied values for mean and median separately for each multiple type.
         mean_values: list[float] = []
         median_values: list[float] = []
         for multiple_key, analysis in multiple_analysis.items():
@@ -442,6 +471,8 @@ class ValuationService:
                     value=value,
                 )
 
+        # If there are no mean or median values then there is no data to calculate the enterprise value,
+        # so we return the summary base with the enterprise value set to None.
         if not mean_values and not median_values:
             summary_base["enterprise_value"] = None
             summary_base["revenue_based_valuation_mean"] = None
@@ -460,8 +491,12 @@ class ValuationService:
         summary_base["revenue_based_valuation_median"] = revenue_median
         summary_base["ebitda_based_valuation_mean"] = ebitda_mean
         summary_base["ebitda_based_valuation_median"] = ebitda_median
-        summary_base["mean_valuation"] = float(np.mean(mean_values)) if mean_values else None
-        summary_base["median_valuation"] = float(np.mean(median_values)) if median_values else None
+
+        # We calculate the average of all the mean and median calculations for each multiple type. Essentially,
+        # this is the average of the mean revenue based and ebitda based valuations 
+        # and the average of the median revenue based and ebitda based valuations.
+        summary_base["mean_avereage_valuation"] = float(np.mean(mean_values)) if mean_values else None
+        summary_base["median_average_valuation"] = float(np.mean(median_values)) if median_values else None
 
         logger.info(
             "valuation.final_summary",
@@ -469,8 +504,8 @@ class ValuationService:
             revenue_median=revenue_median,
             ebitda_mean=ebitda_mean,
             ebitda_median=ebitda_median,
-            mean_valuation=summary_base["mean_valuation"],
-            median_valuation=summary_base["median_valuation"],
+            mean_valuation=summary_base["mean_avereage_valuation"],
+            median_valuation=summary_base["median_average_valuation"],
         )
 
         adjustments: dict[str, object] = {

@@ -5,7 +5,8 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-
+# Basic model for each peer company to store the basic information about the peer company. 
+# Matches closely with the yfinance data model.
 class PeerCompany(BaseModel):
     ticker: str
     name: str | None = None
@@ -23,6 +24,9 @@ class PeerCompany(BaseModel):
     raw_source: dict[str, Any] | None = Field(default=None, exclude=True)
 
 
+# Main model for the peer group to store the list of peers and the selection method and criteria.
+# This is used to store the peer group for each valuation request. Although currently, the selection method 
+# is only industry based, it is easy to extend to other selection methods. 
 class PeerGroup(BaseModel):
     peers: list[PeerCompany] = Field(default_factory=list)
     selection_method: str
