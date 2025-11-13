@@ -1,72 +1,57 @@
 # Modus Comps Tool
 
-Auditable comparable-company valuation pipeline built for the Modus take-home assessment. The service accepts minimal private-company inputs, selects comparable public peers, fetches market/financial data via `yfinance`, calculates EV/Revenue and EV/EBITDA multiples, and produces a documented audit trail. An MCP server is bundled so LLM tools can drive valuations directly.
+## Overview
 
----
+- Problem: Auditors need to estimate the fair value of private venture capital portfolios that are composed of companies that lack market prices and often have sparse, non-standardized financial data. The goal of this project is to create a structured, auditable workflow that helps auditors easily and efficiently produce consistent, well-documented valuations using available data sources. Unlike public companies with readily available market prices, private companies require a systematic approach to arrive at defensible fair value estimates.
+- Methodology: Comparable-company (Comps) valuations for private firms.
+- Approach: Combine automated sector-based peer company selection with optional manual tickers, hydrate publically traded peers via `yfinance`, compute EV/Revenue and EV/EBITDA multiples for each peer, filter outliers (|z| > 2), obtain the mean and median multiples for both EV/Revenue and EV/EBITDA and multiply by the given company's revenue and EBITDA. During each step, assemble a step-by-step audit trail saved to disk.
+- Outcome: FastAPI API and MCP server expose both the valuation summary and retrievable audit details for auditors.
 
-## 1. Project Overview
-- **FastAPI HTTP service** (`src/modus_comps_tool/api/app.py`)
-- **Valuation engine** (`services/valuation_service.py`) covering peer selection, financial data fetch, multiple/statistics calculation, DLOM, and audit persistence
-- **Peer universe** (`data/peer_universe.json`) listing sectors → ticker metadata
-- **Audit storage** (`audit_trails/`) plus cached ticker payloads (`cache/raw/`)
-- **MCP server** (`src/modus_comps_tool/mcp_server.py`) exposing valuation tools for MCP clients
-- **Sample payloads** (`test_inputs/`) for manual or automated testing
+## Detailed Approach
 
----
+1. **Peer pool**: Combine up to 10 peers – prioritize caller-supplied tickers, then fill remaining slots by sector/industry from `peer_universe.json`. If no sector or industry are provided, then no peers will be found and the valuation will return none. If the sector or industry provided are variation of one of the possible sectors, a semantic matching will attempt to match the input sector to a key in the peer universe. If there is a match, the valuation will continue, else no valuation will happen as no peers will be found. 
+2. **Fetch data**: For each peer, pull latest market cap, enterprise value (which can be different than market cap so we will use this in multiple calculations), revenue, EBITDA, and related metrics via `yfinance` (cached on disk).
+3. **Raw multiples**: Compute EV/Revenue and EV/EBITDA per peer (guarding against missing or negative denominators).
+4. **Outlier screen**: Build arrays of multiples, calculate z-scores, and discard peers whose multiples exceed |z| > 2 (≈ two standard deviations from mean). Small samples automatically keep all peers.
+5. **Aggregate stats**: On the filtered set, produce mean and median for each multiple type (plus min/max/std dev) using `StatsEngine`.
+6. **Apply to target**: Multiply the target company’s revenue and EBITDA by the filtered mean and median multiples to produce implied enterprise values.
+7. **Adjustments**: If configured, apply Discount for Lack of Marketability (DLOM) with the supplied percentage.
+8. **Audit trail**: Persist raw inputs, filtered peers, statistics, implied values, adjustments, and plain-language narration to `audit_trails/{request_id}.json`.
 
-## 2. Setup
+## Key Design Decisions & Tradeoffs
+- **MCP + Multiple APIs**: By allowing the end user to have access to multiple API's that not only allow an evaluation to be performed but also saved so that the audit trail can be recovered later allows the auditor greater flexibility over how they use this tool. Additionally, the MCP allows the auditor to ask in plain text these evaluation questions without having to understand how to call an API. This does add complexity and can be added steps to set up for the user. However, by still exposing the underlying functionality through an API, more tech savy users can still use the same service as well. 
+- **`yfinance` data source**: This dataset requires no API keys and is widely available and easy to cache. Was chosen for its ease of use and implementation. However the accuracy depends on Yahoo Finance updates so there are definitely cases of missing data. Furthermore, relying on just one API would cause a large dependecy issue if for some reason yahoo finance ever went down as well. 
+- **EV/Revenue and EV/EBITDA as main multiples**: I chose to use these two calculation methods for the comparisons between companies as they are the standard ones done throughout the industry. However, some of these numbers are very dependent on the specific company and can be over inflated which I discovered through testing so I decided to remove the outliers if the multiple was over two standard deviations from the other peers. This way we can get a more wholistic view of the peers rather than a single peer affecting the valution tremendously. 
+- **`peer_universe.json`**: This central peer dataset was scraped using LLMs and personal google searching. It is by no means complete and the total sectors could be substantially wider as well as more in depth. However, the time and energy it would take to create such a dataset was not possible given the time limit. An LLM based approach could have been possible as well where given a company name, an LLM could be the one suggest all the relevant publically traded companies to compare it; however, I believe in auditing, a deterministic result is prefered in most cases as that produces the most auditable trail. This is why I avoided going down that route, but also added the MCP functionality so the flexibility and power of an LLM could still be used to help find peers. 
+- **Disk-backed JSON caching**: Chose to cache the audit trails on disk in order because it is simple, transparent, and auditable. However, it does lack the scaling benefits of distributed cache and also depending if this service is running in a stateless solution or on someones local machine, there could be added complexities with how the files are stored and retrieved.
+- **Audit trail first**: I decided to create the audit trail as the valuation took place every step. This allows for future steps to be easily added or removed rather than building an audit trail at the end of a valuation. Storing this audit trail does create a relatively large json (1000 lines) that is stored on disk, but I believe the storage tradeoff to be worth the clear and easily traceable audit trail that is produced. 
+- **Semantic sector matching**: I wanted to account for cases where auditors may mistype or not know the exact sector of a private company, so in those cases I decided to use basic semantic matching to determine if their input is close to one of the known sectors in our dataset. This can occasionally mislabel the sector of a company, but because these valuations can be done again and all of the peers are illustrated in the audit trail.  
+
+## Setup
 ```bash
 git clone git@github.com:awanga123/modus_private_company_valuation_tool.git
 cd modus_private_company_valuation_tool
 uv sync
 ```
-`uv` installs all runtime + dev dependencies (FastAPI, pydantic, structlog, yfinance, fastmcp, pytest, etc.) into `.venv/`.
 
----
-
-## 3. Run the FastAPI Service
+### Run FastAPI
 ```bash
-cd modus_private_company_valuation_tool
 PYTHONPATH=src uv run uvicorn modus_comps_tool.api.app:app --reload --host 127.0.0.1 --port 8000
 ```
 
-- `app.get("/health")`: Liveness check returning `{ "status": "ok" }`.
-- `app.get("/peer-sectors")`: Lists available sector keys from `peer_universe.json` for caller discovery. 
-- `app.post("/valuations")`: Accepts `ValuationRequestPayload`, runs the valuation workflow, and returns summary plus human-readable audit narrative.
-- `app.get("/valuations/{request_id}")`: Loads stored `ValuationResult` files to deliver the full detailed audit trail.
-
-- Health: `curl http://127.0.0.1:8000/health`
-- Swagger UI: `http://127.0.0.1:8000/docs#/default/`
-
-### Example request
+### Example Valuation Request
 ```bash
 curl -X POST "http://127.0.0.1:8000/valuations" \
   -H "Content-Type: application/json" \
   -d '{
-        "target_company": {
-          "name": "Stripe",
-          "revenue": 5100000000,
-          "sector": "Financial Technology",
-          "industry": "Financial Technology"
-        },
-        "peer_selection": {
-          "method": "industry_based",
-          "custom_tickers": ["MSFT", "NVDA"]
-        },
-        "valuation_config": {
-          "multiples": ["EV_REVENUE", "EV_EBITDA"],
-          "statistics": ["median", "mean"],
-          "apply_dlom": false
-        }
+        "target_company": {"name": "Stripe", "revenue": 5100000000, "sector": "Financial Technology"},
+        "peer_selection": {"method": "industry_based", "custom_tickers": ["MSFT", "NVDA"]},
+        "valuation_config": {"multiples": ["EV_REVENUE", "EV_EBITDA"], "statistics": ["median", "mean"]}
       }'
 ```
+Result includes a `request_id` for fetching the full audit via `GET /valuations/{request_id}`.
 
-Response includes a `request_id`, valuation summary, peer analysis, multiple analysis, adjustments, a human-readable audit summary, and metadata. Retrieve the full stored audit with `GET /valuations/{request_id}`.
-
-All a successful valuation call needs is the target company, the revenue, and a sector. The other fields can be all left blank and default values will be chosen. 
----
-
-## 4. Run the MCP Server
+### Run the MCP Server
 ```bash
 cd modus_private_company_valuation_tool
 PYTHONPATH=src uv run python -m modus_comps_tool.mcp_server
@@ -95,104 +80,16 @@ Claude Desktop configuration:
 }
 ```
 
-### Tools exposed
-- `list_peer_sectors()` → available sector names from the peer universe
-- `create_valuation(name, revenue, sector?, industry?, custom_tickers?, apply_dlom?, dlom_percentage?)`
-- `get_valuation(request_id)` → full stored valuation (audit + summary)
+## Potential Improvements
+- Improve the peer_universe.json dataset to have a much more wholistic view of all the publically traded companies and sectors out there, this would greately improve the accuracy of the model. This could be done through web scraping with the help of LLMs to tag and label the companies scraped. 
+- Introduce multiple data providers with reconciliation to reduce reliance on a single API. Additionally I would make these calls run in a batch so that they are not called sequentially to speed up this data fetching process.
+- Add additional multiple types and statistics. Currently it is hard coded to just EV/Revenue and EV/EBITDA where you could also inclue PE ratio and a bunch of other financial benchmarks to value the company. 
+- Better testing both unit and integration wise
+- Create a simple browser UI for interactive peer selection and audit browsing.
+- Use a real databse to store the information regarding the peers as well as the caching system for stored audits, so that they can be saved for longer than 24 hours. 
 
-Once you have claude desktop running and the mcp connected, you can just try asking claude -> "hey for a company named Stripe that makes 5 billion in revenue a year, how much is it worth?" 
+## Workflow and Demo
 
 Demo Video -> https://drive.google.com/file/d/1tFOtDAMJayg7iayf8N6DhE3HiIBhqShK/view?usp=sharing
 
----
-
-## 5. Project Structure
-```
-src/modus_comps_tool/
-├── api/                 # FastAPI app & schemas
-├── config/              # Environment-aware settings
-├── data/                # Peer universe JSON
-├── mcp_server.py        # FastMCP entrypoint
-├── models/              # Pydantic models (request, peers, audit, multiples)
-└── services/            # Peer selection, data fetch, multiples, stats, valuation
-```
-
-Artifacts:
-- Cached ticker data → `cache/raw/*.json`
-- Audit results → `audit_trails/{request_id}.json`
-
----
-
-## 6. Valuation Logic
-1. **Peer pool**: Combine up to 10 peers – prioritize caller-supplied tickers, then fill remaining slots by sector/industry from `peer_universe.json`. If no sector or industry are provided, then no peers will be found and the valuation will return none. If the sector or industry provided are variation of one of the possible sectors, a semantic matching will attempt to match the input sector to a key in the peer universe. If there is a match, the valuation will continue, else no valuation will happen as no peers will be found. 
-2. **Fetch data**: For each peer, pull latest market cap, enterprise value, revenue, EBITDA, and related metrics via `yfinance` (cached on disk).
-3. **Raw multiples**: Compute EV/Revenue and EV/EBITDA per peer (guarding against missing or negative denominators).
-4. **Outlier screen**: Build arrays of multiples, calculate z-scores, and discard peers whose multiples exceed |z| > 2 (≈ two standard deviations from mean). Small samples automatically keep all peers.
-5. **Aggregate stats**: On the filtered set, produce mean and median for each multiple type (plus min/max/std dev) using `StatsEngine`.
-6. **Apply to target**: Multiply the target company’s revenue and EBITDA by the filtered mean and median multiples to produce implied enterprise values.
-7. **Adjustments**: If configured, apply Discount for Lack of Marketability (DLOM) with the supplied percentage.
-8. **Audit trail**: Persist raw inputs, filtered peers, statistics, implied values, adjustments, and plain-language narration to `audit_trails/{request_id}.json`.
-
-Every number in the summary is traceable back to the peer metrics stored in the audit file.
-
-| Step | Description | Implemented in |
-| --- | --- | --- |
-| 1. Peer pool assembly | Manual tickers + sector matches (limit 10) using revenue filters | `services/peer_selector.py`, `models/company.PeerFilters` |
-| 2. Data fetch | Cached yfinance pulls for each peer’s market cap, EV, revenue, EBITDA, net income | `services/data_fetcher.py` |
-| 3. Multiple calculation | EV/Revenue, EV/EBITDA, with numerator/denominator metadata | `services/multiple_calculator.py` |
-| 4. Outlier detection | z-score screening (|z| > 2) to drop statistical outliers | `services/stats_engine.py` |
-| 5. Statistical aggregates | Mean/median/min/max/std dev after outlier removal | `services/stats_engine.py`, `services/valuation_service.py::_analyze_multiples` |
-| 6. Apply multiples | Multiply filtered stats by target revenue/EBITDA for implied EVs | `services/valuation_service.py::_summarize_results` |
-| 7. DLOM adjustments | Optional discount for lack of marketability (percentage-based) | `services/valuation_service.py::_summarize_results` |
-| 8. Audit persistence | Store calculation steps, metadata, narrative | `services/valuation_service.py::_build_audit_trail`, `models/audit.py` |
-
-**Note that the audit trail is built up throughout the steps above as to keep track of what is going on sequentially**
-
----
-
-## 7. Logging & Observability
-- Structured logging via `structlog` (`utils/logging.py`)
-- Events include cache hits/misses, peer selection notes, raw `yfinance` payloads, z-score filtering, implied valuation math, and audit persistence.
-- For LLM usage, banner printing is disabled and FastMCP logging can be silenced by setting `FASTMCP_LOG_ENABLED=0`.
-
----
-
-## 8. Testing & Tooling
-  
-- Run all unit tests:
-
-  `uv run pytest tests/unit/ -v`
-
-- Run with coverage report:
-
-  `uv run pytest tests/unit/ --cov=src/modus_comps_tool/services --cov-report=term-missing`
-
-- Run specific test file:
-
-  `uv run pytest tests/unit/test_stats_engine.py -v`
-  `uv run pytest tests/unit/test_multiple_calculator.py -v`
-  `uv run pytest tests/unit/test_peer_selector.py -v`
-
-- Run a specific test:
-
-  `uv run pytest tests/unit/test_stats_engine.py::TestStatsEngine::test_summarize_with_normal_data -v`
-
-- Suggested commands:
-  - `uv run ruff check`
-  - `uv run mypy`
-- Clear cached financials by removing `cache/raw/*.json`.
-
----
-
-## 9. Known Limitations
-- Peer universe is finite; unfamiliar sectors yield empty peer sets.
-- `yfinance` occasionally omits EBITDA or enterprise value; audit notes capture gaps.
-- Valuation outputs are illustrative and not market-calibrated.
-- MCP transport uses stdio; ensure no other stdout output is interleaved by your MCP client.
-
----
-
-## 10. License
-All credit goes to @ranaroussi for developing yfinance as well https://github.com/ranaroussi/yfinance 
-
-Prepared as part of the Modus take-home assessment. Use and share responsibly.
+- A simple flow goes: **Request → Peer Selector → Data Fetcher → Multiple Calculator → Stats Engine → DLOM Adjuster → Audit Persistence → Response**.

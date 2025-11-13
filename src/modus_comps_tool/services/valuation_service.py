@@ -444,6 +444,12 @@ class ValuationService:
         )
         return multiple_analysis.get(multiple_key, default_analysis).implied_values.get(stat_key)
 
+    def _apply_dlom(self, valuation: float | None, dlom_percentage: float) -> float | None:
+        """Apply Discount for Lack of Marketability (DLOM) to a valuation."""
+        if valuation is None:
+            return None
+        return valuation * (1 - dlom_percentage)
+
     def _summarize_results_simple(
         self,
         ctx: ValuationContext,
@@ -481,22 +487,59 @@ class ValuationService:
             summary_base["ebitda_based_valuation_median"] = None
             return summary_base, {}
 
-        # Extract specific valuations for both mean and median
+        # Extract specific valuations for both mean and median (pre-DLOM)
         revenue_mean = self._get_implied_value(multiple_analysis, "EV_REVENUE", "mean")
         revenue_median = self._get_implied_value(multiple_analysis, "EV_REVENUE", "median")
         ebitda_mean = self._get_implied_value(multiple_analysis, "EV_EBITDA", "mean")
         ebitda_median = self._get_implied_value(multiple_analysis, "EV_EBITDA", "median")
 
+        # Store pre-DLOM valuations
         summary_base["revenue_based_valuation_mean"] = revenue_mean
         summary_base["revenue_based_valuation_median"] = revenue_median
         summary_base["ebitda_based_valuation_mean"] = ebitda_mean
         summary_base["ebitda_based_valuation_median"] = ebitda_median
 
-        # We calculate the average of all the mean and median calculations for each multiple type. Essentially,
-        # this is the average of the mean revenue based and ebitda based valuations 
-        # and the average of the median revenue based and ebitda based valuations.
-        summary_base["mean_avereage_valuation"] = float(np.mean(mean_values)) if mean_values else None
-        summary_base["median_average_valuation"] = float(np.mean(median_values)) if median_values else None
+        # Calculate overall mean and median valuations (pre-DLOM)
+        mean_valuation_pre_dlom = float(np.mean(mean_values)) if mean_values else None
+        median_valuation_pre_dlom = float(np.mean(median_values)) if median_values else None
+
+        summary_base["mean_avereage_valuation"] = mean_valuation_pre_dlom
+        summary_base["median_average_valuation"] = median_valuation_pre_dlom
+
+        # Apply DLOM if configured
+        dlom_applied = False
+        if ctx.valuation_config.apply_dlom and ctx.valuation_config.dlom_percentage > 0:
+            dlom_applied = True
+            dlom_pct = ctx.valuation_config.dlom_percentage
+
+            # Apply DLOM to all valuations
+            revenue_mean_post_dlom = self._apply_dlom(revenue_mean, dlom_pct)
+            revenue_median_post_dlom = self._apply_dlom(revenue_median, dlom_pct)
+            ebitda_mean_post_dlom = self._apply_dlom(ebitda_mean, dlom_pct)
+            ebitda_median_post_dlom = self._apply_dlom(ebitda_median, dlom_pct)
+            mean_valuation_post_dlom = self._apply_dlom(mean_valuation_pre_dlom, dlom_pct)
+            median_valuation_post_dlom = self._apply_dlom(median_valuation_pre_dlom, dlom_pct)
+
+            # Add post-DLOM values to summary
+            summary_base["dlom_applied"] = True
+            summary_base["dlom_percentage"] = dlom_pct
+            summary_base["revenue_based_valuation_mean_post_dlom"] = revenue_mean_post_dlom
+            summary_base["revenue_based_valuation_median_post_dlom"] = revenue_median_post_dlom
+            summary_base["ebitda_based_valuation_mean_post_dlom"] = ebitda_mean_post_dlom
+            summary_base["ebitda_based_valuation_median_post_dlom"] = ebitda_median_post_dlom
+            summary_base["mean_average_valuation_post_dlom"] = mean_valuation_post_dlom
+            summary_base["median_average_valuation_post_dlom"] = median_valuation_post_dlom
+
+            logger.info(
+                "valuation.dlom_applied",
+                dlom_percentage=dlom_pct,
+                mean_pre_dlom=mean_valuation_pre_dlom,
+                mean_post_dlom=mean_valuation_post_dlom,
+                median_pre_dlom=median_valuation_pre_dlom,
+                median_post_dlom=median_valuation_post_dlom,
+            )
+        else:
+            summary_base["dlom_applied"] = False
 
         logger.info(
             "valuation.final_summary",
@@ -504,13 +547,44 @@ class ValuationService:
             revenue_median=revenue_median,
             ebitda_mean=ebitda_mean,
             ebitda_median=ebitda_median,
-            mean_valuation=summary_base["mean_avereage_valuation"],
-            median_valuation=summary_base["median_average_valuation"],
+            mean_valuation=mean_valuation_pre_dlom,
+            median_valuation=median_valuation_pre_dlom,
+            dlom_applied=dlom_applied,
         )
 
+        # Build adjustments dict with DLOM info
         adjustments: dict[str, object] = {
             "note": "Calculation using mean and median of peer multiples with outlier detection (z-score threshold = 2.0)",
         }
+
+        if dlom_applied:
+            adjustments["dlom"] = {
+                "applied": True,
+                "percentage": ctx.valuation_config.dlom_percentage,
+                "description": f"Applied {ctx.valuation_config.dlom_percentage:.1%} discount for lack of marketability",
+                "valuation_adjustments": {
+                    "mean_valuation": {
+                        "pre_dlom": mean_valuation_pre_dlom,
+                        "post_dlom": summary_base.get("mean_average_valuation_post_dlom"),
+                        "discount_amount": mean_valuation_pre_dlom - summary_base.get("mean_average_valuation_post_dlom")
+                        if mean_valuation_pre_dlom and summary_base.get("mean_average_valuation_post_dlom")
+                        else None,
+                    },
+                    "median_valuation": {
+                        "pre_dlom": median_valuation_pre_dlom,
+                        "post_dlom": summary_base.get("median_average_valuation_post_dlom"),
+                        "discount_amount": median_valuation_pre_dlom - summary_base.get("median_average_valuation_post_dlom")
+                        if median_valuation_pre_dlom and summary_base.get("median_average_valuation_post_dlom")
+                        else None,
+                    },
+                },
+            }
+        else:
+            adjustments["dlom"] = {
+                "applied": False,
+                "percentage": 0.0,
+                "description": "No DLOM adjustment applied",
+            }
 
         return summary_base, adjustments
 
