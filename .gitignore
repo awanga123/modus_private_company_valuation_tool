@@ -8,8 +8,26 @@ wheels/
 
 # Virtual environments
 .venv
-compass_artifact_wf-cc7ffed5-b71e-4eab-9998-1dc93f9dbbbc_text_markdown.md
 
+# Test coverage and cache
+.coverage
+.pytest_cache
+htmlcov/
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Project-specific temp files
+compass_artifact_wf-cc7ffed5-b71e-4eab-9998-1dc93f9dbbbc_text_markdown.md
 test_simplified.py
 Modus Take Home Assessment.pdf
 audit_trails/*

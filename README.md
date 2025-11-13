@@ -16,7 +16,8 @@ Auditable comparable-company valuation pipeline built for the Modus take-home as
 
 ## 2. Setup
 ```bash
-cd /Users/alexanderwang/Projects/modus_take_home
+git clone git@github.com:awanga123/modus_private_company_valuation_tool.git
+cd modus_private_company_valuation_tool
 uv sync
 ```
 `uv` installs all runtime + dev dependencies (FastAPI, pydantic, structlog, yfinance, fastmcp, pytest, etc.) into `.venv/`.
@@ -25,7 +26,7 @@ uv sync
 
 ## 3. Run the FastAPI Service
 ```bash
-cd /Users/alexanderwang/Projects/modus_take_home
+cd modus_private_company_valuation_tool
 PYTHONPATH=src uv run uvicorn modus_comps_tool.api.app:app --reload --host 127.0.0.1 --port 8000
 ```
 
@@ -62,12 +63,12 @@ curl -X POST "http://127.0.0.1:8000/valuations" \
 
 Response includes a `request_id`, valuation summary, peer analysis, multiple analysis, adjustments, a human-readable audit summary, and metadata. Retrieve the full stored audit with `GET /valuations/{request_id}`.
 
-All a successful valuation call needs is the target company, the revenue, and a sector. the other fields can be all left blank and default values will be chosen. 
+All a successful valuation call needs is the target company, the revenue, and a sector. The other fields can be all left blank and default values will be chosen. 
 ---
 
 ## 4. Run the MCP Server
 ```bash
-cd /Users/alexanderwang/Projects/modus_take_home
+cd modus_private_company_valuation_tool
 PYTHONPATH=src uv run python -m modus_comps_tool.mcp_server
 ```
 
@@ -80,14 +81,14 @@ Claude Desktop configuration:
             "command": "uv",
             "args": [
                 "--directory",
-                "/Users/alexanderwang/Projects/modus_take_home",
+                "/Users/alexanderwang/Projects/modus_private_company_valuation_tool", // replace with your own source path where you run the mcp
                 "run",
                 "python",
                 "-m",
                 "modus_comps_tool.mcp_server"
             ],
             "env": {
-                "PYTHONPATH": "/Users/alexanderwang/Projects/modus_take_home/src"
+                "PYTHONPATH": "/Users/alexanderwang/Projects/modus_private_company_valuation_tool/src" // make sure to include this as well with the /src 
             }
         }
     }
@@ -192,4 +193,6 @@ Every number in the summary is traceable back to the peer metrics stored in the 
 ---
 
 ## 10. License
+All credit goes to @ranaroussi for developing yfinance as well https://github.com/ranaroussi/yfinance 
+
 Prepared as part of the Modus take-home assessment. Use and share responsibly.

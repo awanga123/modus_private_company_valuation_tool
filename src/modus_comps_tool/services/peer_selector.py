@@ -50,7 +50,7 @@ class PeerSelector:
         logger.info("peer_selection.manual_count", count=len(manual))
 
         # If we have fewer than 10 peers, fill the rest from peer_universe based on sector
-        sector_match_info = {}
+        sector_match_info: dict = {}
         if len(combined) < 10:
             sector_peers, sector_match_info = self._select_by_sector(target)
             for peer in sector_peers:
@@ -120,6 +120,7 @@ class PeerSelector:
 
         # Try sector first, fall back to industry
         search_key = target.sector or target.industry
+        assert search_key is not None  # Already checked above
         match_info["original_search_key"] = search_key
         sector_peers = self._peer_universe.get(search_key, [])
 
@@ -185,8 +186,8 @@ class PeerSelector:
         similarities = util.cos_sim(query_embedding, self._sector_embeddings)[0]
 
         # Get the best match
-        best_idx = similarities.argmax().item()
-        best_similarity = similarities[best_idx].item()
+        best_idx = int(similarities.argmax().item())
+        best_similarity = float(similarities[best_idx].item())
 
         # Return match only if similarity is above threshold (0.5 = 50% similar)
         # This prevents matching completely unrelated terms
