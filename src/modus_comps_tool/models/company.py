@@ -5,6 +5,11 @@ from pydantic import BaseModel, ConfigDict, Field, NonNegativeInt, PositiveFloat
 from ..config.settings import settings
 
 
+# NOTE: The sector and industry fields can be null, but this will result in no peers being selected 
+# and thus no valuation being performed. This is an intended design decision because if the user does not provide a sector or industry,
+# then there is no real basis to doing this comparitive analysis in the first place. We will however perform
+# a fuzzy matching of the sector or industry to the peer universe to help the user select the appropriate sector or industry
+# if the given sector or industry is not found in the peer universe and is simply misspelled or another common variation.
 class TargetCompany(BaseModel):
     name: str
     revenue: PositiveFloat = Field(description="Annual revenue in USD")

@@ -29,6 +29,11 @@ cd /Users/alexanderwang/Projects/modus_take_home
 PYTHONPATH=src uv run uvicorn modus_comps_tool.api.app:app --reload --host 127.0.0.1 --port 8000
 ```
 
+- `app.get("/health")`: Liveness check returning `{ "status": "ok" }`.
+- `app.get("/peer-sectors")`: Lists available sector keys from `peer_universe.json` for caller discovery. 
+- `app.post("/valuations")`: Accepts `ValuationRequestPayload`, runs the valuation workflow, and returns summary plus human-readable audit narrative.
+- `app.get("/valuations/{request_id}")`: Loads stored `ValuationResult` files to deliver the full detailed audit trail.
+
 - Health: `curl http://127.0.0.1:8000/health`
 - Swagger UI: `http://127.0.0.1:8000/docs#/default/`
 
@@ -45,7 +50,7 @@ curl -X POST "http://127.0.0.1:8000/valuations" \
         },
         "peer_selection": {
           "method": "industry_based",
-          "custom_tickers": ["SQ", "PYPL"]
+          "custom_tickers": ["MSFT", "NVDA"]
         },
         "valuation_config": {
           "multiples": ["EV_REVENUE", "EV_EBITDA"],
@@ -57,6 +62,7 @@ curl -X POST "http://127.0.0.1:8000/valuations" \
 
 Response includes a `request_id`, valuation summary, peer analysis, multiple analysis, adjustments, a human-readable audit summary, and metadata. Retrieve the full stored audit with `GET /valuations/{request_id}`.
 
+All a successful valuation call needs is the target company, the revenue, and a sector. the other fields can be all left blank and default values will be chosen. 
 ---
 
 ## 4. Run the MCP Server
@@ -93,6 +99,10 @@ Claude Desktop configuration:
 - `create_valuation(name, revenue, sector?, industry?, custom_tickers?, apply_dlom?, dlom_percentage?)`
 - `get_valuation(request_id)` → full stored valuation (audit + summary)
 
+Once you have claude desktop running and the mcp connected, you can just try asking claude -> "hey for a company named Stripe that makes 5 billion in revenue a year, how much is it worth?" 
+
+Demo Video -> https://drive.google.com/file/d/1tFOtDAMJayg7iayf8N6DhE3HiIBhqShK/view?usp=sharing
+
 ---
 
 ## 5. Project Structure
@@ -113,7 +123,7 @@ Artifacts:
 ---
 
 ## 6. Valuation Logic
-1. **Peer pool**: Combine up to 10 peers – prioritize caller-supplied tickers, then fill remaining slots by sector/industry from `peer_universe.json`.
+1. **Peer pool**: Combine up to 10 peers – prioritize caller-supplied tickers, then fill remaining slots by sector/industry from `peer_universe.json`. If no sector or industry are provided, then no peers will be found and the valuation will return none. If the sector or industry provided are variation of one of the possible sectors, a semantic matching will attempt to match the input sector to a key in the peer universe. If there is a match, the valuation will continue, else no valuation will happen as no peers will be found. 
 2. **Fetch data**: For each peer, pull latest market cap, enterprise value, revenue, EBITDA, and related metrics via `yfinance` (cached on disk).
 3. **Raw multiples**: Compute EV/Revenue and EV/EBITDA per peer (guarding against missing or negative denominators).
 4. **Outlier screen**: Build arrays of multiples, calculate z-scores, and discard peers whose multiples exceed |z| > 2 (≈ two standard deviations from mean). Small samples automatically keep all peers.
@@ -128,7 +138,7 @@ Every number in the summary is traceable back to the peer metrics stored in the 
 | --- | --- | --- |
 | 1. Peer pool assembly | Manual tickers + sector matches (limit 10) using revenue filters | `services/peer_selector.py`, `models/company.PeerFilters` |
 | 2. Data fetch | Cached yfinance pulls for each peer’s market cap, EV, revenue, EBITDA, net income | `services/data_fetcher.py` |
-| 3. Multiple calculation | EV/Revenue, EV/EBITDA, wuth numerator/denominator metadata | `services/multiple_calculator.py` |
+| 3. Multiple calculation | EV/Revenue, EV/EBITDA, with numerator/denominator metadata | `services/multiple_calculator.py` |
 | 4. Outlier detection | z-score screening (|z| > 2) to drop statistical outliers | `services/stats_engine.py` |
 | 5. Statistical aggregates | Mean/median/min/max/std dev after outlier removal | `services/stats_engine.py`, `services/valuation_service.py::_analyze_multiples` |
 | 6. Apply multiples | Multiply filtered stats by target revenue/EBITDA for implied EVs | `services/valuation_service.py::_summarize_results` |
@@ -147,9 +157,26 @@ Every number in the summary is traceable back to the peer metrics stored in the 
 ---
 
 ## 8. Testing & Tooling
-- Use `test_inputs/` JSON files to exercise the pipeline.  
-- Suggested commands (after adding tests/lints):
-  - `uv run pytest`
+  
+- Run all unit tests:
+
+  `uv run pytest tests/unit/ -v`
+
+- Run with coverage report:
+
+  `uv run pytest tests/unit/ --cov=src/modus_comps_tool/services --cov-report=term-missing`
+
+- Run specific test file:
+
+  `uv run pytest tests/unit/test_stats_engine.py -v`
+  `uv run pytest tests/unit/test_multiple_calculator.py -v`
+  `uv run pytest tests/unit/test_peer_selector.py -v`
+
+- Run a specific test:
+
+  `uv run pytest tests/unit/test_stats_engine.py::TestStatsEngine::test_summarize_with_normal_data -v`
+
+- Suggested commands:
   - `uv run ruff check`
   - `uv run mypy`
 - Clear cached financials by removing `cache/raw/*.json`.

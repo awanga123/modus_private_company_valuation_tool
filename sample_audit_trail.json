@@ -1,0 +1,853 @@
+{
+    "request_id": "7b503340-5890-40d4-828f-5765aedfb044",
+    "_comment_overview": "Step 8 – audit persistence metadata wrapper",
+    "valuation_summary": {
+      "target_company": "Stripe",
+      "valuation_date": "2025-11-13",
+      "revenue_based_valuation_mean": 30810325051.203102,
+      "revenue_based_valuation_median": 21964091180.083946,
+      "ebitda_based_valuation_mean": null,
+      "ebitda_based_valuation_median": null,
+      "mean_avereage_valuation": 30810325051.203102,
+      "median_average_valuation": 21964091180.083946
+    },
+    "_comment_peer_analysis": "Steps 1–2 – peer pool assembly and financial data fetch",
+    "peer_analysis": {
+      "peers": [
+        {
+          "ticker": "SQ",
+          "name": null,
+          "industry": null,
+          "sector": null,
+          "subsector": null,
+          "market_cap": null,
+          "enterprise_value": null,
+          "revenue": null,
+          "ebitda": null,
+          "net_income": null,
+          "ev_to_revenue": null,
+          "ev_to_ebitda": null,
+          "data_timestamp": "2025-11-13T09:30:56.524194Z"
+        },
+        {
+          "ticker": "PYPL",
+          "name": null,
+          "industry": null,
+          "sector": null,
+          "subsector": null,
+          "market_cap": 62875807744,
+          "enterprise_value": 64287809536,
+          "revenue": 31797000000.0,
+          "ebitda": 5763000000.0,
+          "net_income": 4147000000.0,
+          "ev_to_revenue": 2.021819968424694,
+          "ev_to_ebitda": 11.155268009023079,
+          "data_timestamp": "2025-11-13T09:30:56.950596Z"
+        },
+        {
+          "ticker": "AFRM",
+          "name": "Affirm",
+          "industry": "Financial Technology",
+          "sector": "Financial Technology",
+          "subsector": null,
+          "market_cap": 26059313152,
+          "enterprise_value": 32539887616,
+          "revenue": 3224412000.0,
+          "ebitda": 337993000.0,
+          "net_income": 52186000.0,
+          "ev_to_revenue": 10.091727612972536,
+          "ev_to_ebitda": 96.27385068921545,
+          "data_timestamp": "2025-11-13T09:06:24.928970Z"
+        },
+        {
+          "ticker": "AXP",
+          "name": "American Express",
+          "industry": "Financial Technology",
+          "sector": "Financial Technology",
+          "subsector": null,
+          "market_cap": 256783220736,
+          "enterprise_value": 263290224640,
+          "revenue": 65949000000.0,
+          "ebitda": null,
+          "net_income": 10129000000.0,
+          "ev_to_revenue": 3.9923308107780255,
+          "ev_to_ebitda": null,
+          "data_timestamp": "2025-11-13T09:06:25.346983Z"
+        },
+        {
+          "ticker": "COIN",
+          "name": "Coinbase",
+          "industry": "Financial Technology",
+          "sector": "Financial Technology",
+          "subsector": null,
+          "market_cap": 81971716096,
+          "enterprise_value": 79982698496,
+          "revenue": 6564028000.0,
+          "ebitda": 2235435000.0,
+          "net_income": 2579066000.0,
+          "ev_to_revenue": 12.18500263801434,
+          "ev_to_ebitda": 35.779478488974185,
+          "data_timestamp": "2025-11-13T09:06:25.809634Z"
+        },
+        {
+          "ticker": "DAVE",
+          "name": "Dave",
+          "industry": "Financial Technology",
+          "sector": "Financial Technology",
+          "subsector": null,
+          "market_cap": 3262451200,
+          "enterprise_value": 3246011136,
+          "revenue": 347076000.0,
+          "ebitda": 34611000.0,
+          "net_income": 57873000.0,
+          "ev_to_revenue": 9.352450575666424,
+          "ev_to_ebitda": 93.78553454104187,
+          "data_timestamp": "2025-11-13T09:06:26.293478Z"
+        },
+        {
+          "ticker": "FI",
+          "name": "Fiserv, Inc.",
+          "industry": "Financial Technology",
+          "sector": "Financial Services",
+          "subsector": null,
+          "market_cap": 34314950656,
+          "enterprise_value": 63588950016,
+          "revenue": 20456000000.0,
+          "ebitda": 5879000000.0,
+          "net_income": 3131000000.0,
+          "ev_to_revenue": 3.1085720578803286,
+          "ev_to_ebitda": 10.816286786188128,
+          "data_timestamp": "2025-11-13T09:06:26.813096Z"
+        },
+        {
+          "ticker": "FIS",
+          "name": "Fidelity National Information Services",
+          "industry": "Financial Technology",
+          "sector": "Financial Services",
+          "subsector": null,
+          "market_cap": 34297257984,
+          "enterprise_value": 46797254656,
+          "revenue": 10127000000.0,
+          "ebitda": 1761000000.0,
+          "net_income": 1450000000.0,
+          "ev_to_revenue": 4.621038279450973,
+          "ev_to_ebitda": 26.574250230550824,
+          "data_timestamp": "2025-11-13T09:06:27.297790Z"
+        },
+        {
+          "ticker": "FISV",
+          "name": "Fiserv",
+          "industry": "Financial Technology",
+          "sector": "Financial Technology",
+          "subsector": null,
+          "market_cap": 34626904064,
+          "enterprise_value": null,
+          "revenue": 20456000000.0,
+          "ebitda": 5879000000.0,
+          "net_income": 3131000000.0,
+          "ev_to_revenue": null,
+          "ev_to_ebitda": null,
+          "data_timestamp": "2025-11-13T09:06:27.738865Z"
+        },
+        {
+          "ticker": "FOUR",
+          "name": "Shift4 Payments",
+          "industry": "Financial Technology",
+          "sector": "Financial Technology",
+          "subsector": null,
+          "market_cap": 6485155328,
+          "enterprise_value": 9848516608,
+          "revenue": 3330600000.0,
+          "ebitda": 251000000.0,
+          "net_income": 229600000.0,
+          "ev_to_revenue": 2.956979705758722,
+          "ev_to_ebitda": 39.23711796015936,
+          "data_timestamp": "2025-11-13T09:06:28.367778Z"
+        }
+      ],
+      "selection_method": "sector_based",
+      "selection_criteria": {
+        "method": "sector_based",
+        "applied_filters": {
+          "revenue_range": [
+            200000000,
+            2000000000
+          ],
+          "exclude_negative_ebitda": true,
+          "saas_only": false,
+          "focus_fashion_only": false
+        },
+        "sector": "fintech",
+        "industry": "fintech",
+        "max_peers": 10,
+        "fuzzy_match_used": true,
+        "original_search_key": "fintech",
+        "matched_sector_key": "Financial Technology",
+        "similarity_score": 0.666
+      },
+      "excluded_tickers": [],
+      "notes": [
+        "Incomplete data for SQ: enterprise_value=None, revenue=None",
+        "Incomplete data for FISV: enterprise_value=None, revenue=20456000000.0"
+      ]
+    },
+    "_comment_multiple_analysis": "Steps 3–5 – multiples calculated, outliers screened, and stats summarized",
+    "multiple_analysis": {
+      "EV_REVENUE": {
+        "values": [
+          2.021819968424694,
+          10.091727612972536,
+          3.9923308107780255,
+          12.18500263801434,
+          9.352450575666424,
+          3.1085720578803286,
+          4.621038279450973,
+          2.956979705758722
+        ],
+        "mean": 6.041240206118255,
+        "median": 4.306684545114499,
+        "min": 2.021819968424694,
+        "max": 12.18500263801434,
+        "std_dev": 3.633186045605099,
+        "outliers_excluded": [],
+        "target_metric": 5100000000.0,
+        "implied_values": {
+          "mean": 30810325051.203102,
+          "median": 21964091180.083946
+        }
+      },
+      "EV_EBITDA": {
+        "values": [
+          11.155268009023079,
+          96.27385068921545,
+          35.779478488974185,
+          93.78553454104187,
+          10.816286786188128,
+          26.574250230550824,
+          39.23711796015936
+        ],
+        "mean": 44.803112386450415,
+        "median": 35.779478488974185,
+        "min": 10.816286786188128,
+        "max": 96.27385068921545,
+        "std_dev": 33.339153312928204,
+        "outliers_excluded": [],
+        "target_metric": null,
+        "implied_values": {}
+      }
+    },
+    "_comment_adjustments": "Step 7 – post-calculation adjustments such as DLOM",
+    "adjustments": {
+      "note": "Calculation using mean and median of peer multiples with outlier detection (z-score threshold = 2.0)"
+    },
+    "_comment_audit_trail": "Step 8 – sequential audit log aligned with README steps",
+    "audit_trail": {
+      "request_id": "7b503340-5890-40d4-828f-5765aedfb044",
+      "valuation_date": "2025-11-13T21:47:59.241802Z",
+      "assumptions": [],
+      "metadata": {
+        "calculation_time_ms": 3,
+        "applied_multiples": [
+          "EV_REVENUE",
+          "EV_EBITDA"
+        ]
+      },
+      "calculation_steps": [
+        {
+          "_comment_step_1": "Step 1 – peer selection output",
+          "description": "Peer selection completed",
+          "data": {
+            "peers": [
+              {
+                "ticker": "SQ",
+                "name": null,
+                "industry": null, 
+                "sector": null,
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              },
+              {
+                "ticker": "PYPL",
+                "name": null,
+                "industry": null,
+                "sector": null,
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              },
+              {
+                "ticker": "AFRM",
+                "name": "Affirm",
+                "industry": "Financial Technology",
+                "sector": "Financial Technology",
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              },
+              {
+                "ticker": "AXP",
+                "name": "American Express",
+                "industry": "Financial Technology",
+                "sector": "Financial Technology",
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              },
+              {
+                "ticker": "COIN",
+                "name": "Coinbase",
+                "industry": "Financial Technology",
+                "sector": "Financial Technology",
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              },
+              {
+                "ticker": "DAVE",
+                "name": "Dave",
+                "industry": "Financial Technology",
+                "sector": "Financial Technology",
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              },
+              {
+                "ticker": "FI",
+                "name": "Fiserv, Inc.",
+                "industry": "Financial Technology",
+                "sector": "Financial Services",
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              },
+              {
+                "ticker": "FIS",
+                "name": "Fidelity National Information Services",
+                "industry": "Financial Technology",
+                "sector": "Financial Services",
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              },
+              {
+                "ticker": "FISV",
+                "name": "Fiserv",
+                "industry": "Financial Technology",
+                "sector": "Financial Technology",
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              },
+              {
+                "ticker": "FOUR",
+                "name": "Shift4 Payments",
+                "industry": "Financial Technology",
+                "sector": "Financial Technology",
+                "subsector": null,
+                "market_cap": null,
+                "enterprise_value": null,
+                "revenue": null,
+                "ebitda": null,
+                "net_income": null,
+                "ev_to_revenue": null,
+                "ev_to_ebitda": null,
+                "data_timestamp": null
+              }
+            ],
+            "selection_method": "sector_based",
+            "selection_criteria": {
+              "method": "sector_based",
+              "applied_filters": {
+                "revenue_range": [
+                  200000000,
+                  2000000000
+                ],
+                "exclude_negative_ebitda": true,
+                "saas_only": false,
+                "focus_fashion_only": false
+              },
+              "sector": "fintech",
+              "industry": "fintech",
+              "max_peers": 10,
+              "fuzzy_match_used": true,
+              "original_search_key": "fintech",
+              "matched_sector_key": "Financial Technology",
+              "similarity_score": 0.666
+            },
+            "excluded_tickers": [],
+            "notes": []
+          }
+        },
+        {
+          "_comment_step_2": "Step 2 – financial data fetched for each peer",
+          "description": "Fetched peer financials",
+          "data": {
+            "SQ": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            },
+            "PYPL": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            },
+            "AFRM": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            },
+            "AXP": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            },
+            "COIN": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            },
+            "DAVE": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            },
+            "FI": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            },
+            "FIS": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            },
+            "FISV": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            },
+            "FOUR": {
+              "keys": [
+                "ticker",
+                "name",
+                "sector",
+                "industry",
+                "market_cap",
+                "enterprise_value",
+                "revenue",
+                "ebitda",
+                "net_income",
+                "balance_sheet",
+                "financials",
+                "source_meta"
+              ]
+            }
+          }
+        },
+        {
+          "_comment_step_3": "Step 3 – per-peer multiple calculations",
+          "description": "Calculated valuation multiples per peer",
+          "data": {
+            "SQ": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": null,
+                "denominator": null,
+                "calculated_multiple": null,
+                "rationale": "insufficient data"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": null,
+                "denominator": null,
+                "calculated_multiple": null,
+                "rationale": "insufficient data"
+              }
+            ],
+            "PYPL": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": 64287809536,
+                "denominator": 31797000000.0,
+                "calculated_multiple": 2.021819968424694,
+                "rationale": "enterprise_value / revenue"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": 64287809536,
+                "denominator": 5763000000.0,
+                "calculated_multiple": 11.155268009023079,
+                "rationale": "enterprise_value / ebitda"
+              }
+            ],
+            "AFRM": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": 32539887616,
+                "denominator": 3224412000.0,
+                "calculated_multiple": 10.091727612972536,
+                "rationale": "enterprise_value / revenue"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": 32539887616,
+                "denominator": 337993000.0,
+                "calculated_multiple": 96.27385068921545,
+                "rationale": "enterprise_value / ebitda"
+              }
+            ],
+            "AXP": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": 263290224640,
+                "denominator": 65949000000.0,
+                "calculated_multiple": 3.9923308107780255,
+                "rationale": "enterprise_value / revenue"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": 263290224640,
+                "denominator": null,
+                "calculated_multiple": null,
+                "rationale": "insufficient data"
+              }
+            ],
+            "COIN": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": 79982698496,
+                "denominator": 6564028000.0,
+                "calculated_multiple": 12.18500263801434,
+                "rationale": "enterprise_value / revenue"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": 79982698496,
+                "denominator": 2235435000.0,
+                "calculated_multiple": 35.779478488974185,
+                "rationale": "enterprise_value / ebitda"
+              }
+            ],
+            "DAVE": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": 3246011136,
+                "denominator": 347076000.0,
+                "calculated_multiple": 9.352450575666424,
+                "rationale": "enterprise_value / revenue"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": 3246011136,
+                "denominator": 34611000.0,
+                "calculated_multiple": 93.78553454104187,
+                "rationale": "enterprise_value / ebitda"
+              }
+            ],
+            "FI": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": 63588950016,
+                "denominator": 20456000000.0,
+                "calculated_multiple": 3.1085720578803286,
+                "rationale": "enterprise_value / revenue"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": 63588950016,
+                "denominator": 5879000000.0,
+                "calculated_multiple": 10.816286786188128,
+                "rationale": "enterprise_value / ebitda"
+              }
+            ],
+            "FIS": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": 46797254656,
+                "denominator": 10127000000.0,
+                "calculated_multiple": 4.621038279450973,
+                "rationale": "enterprise_value / revenue"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": 46797254656,
+                "denominator": 1761000000.0,
+                "calculated_multiple": 26.574250230550824,
+                "rationale": "enterprise_value / ebitda"
+              }
+            ],
+            "FISV": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": null,
+                "denominator": 20456000000.0,
+                "calculated_multiple": null,
+                "rationale": "insufficient data"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": null,
+                "denominator": 5879000000.0,
+                "calculated_multiple": null,
+                "rationale": "insufficient data"
+              }
+            ],
+            "FOUR": [
+              {
+                "multiple": "EV_REVENUE",
+                "numerator": 9848516608,
+                "denominator": 3330600000.0,
+                "calculated_multiple": 2.956979705758722,
+                "rationale": "enterprise_value / revenue"
+              },
+              {
+                "multiple": "EV_EBITDA",
+                "numerator": 9848516608,
+                "denominator": 251000000.0,
+                "calculated_multiple": 39.23711796015936,
+                "rationale": "enterprise_value / ebitda"
+              }
+            ]
+          }
+        },
+        {
+          "_comment_step_4_5": "Steps 4–5 – outlier detection and statistical summary",
+          "description": "Multiple analysis summary",
+          "data": {
+            "EV_REVENUE": {
+              "peer_multiples_used": [
+                2.021819968424694,
+                10.091727612972536,
+                3.9923308107780255,
+                12.18500263801434,
+                9.352450575666424,
+                3.1085720578803286,
+                4.621038279450973,
+                2.956979705758722
+              ],
+              "statistics_after_outlier_screening": {
+                "mean": 6.041240206118255,
+                "median": 4.306684545114499,
+                "min": 2.021819968424694,
+                "max": 12.18500263801434,
+                "std_dev": 3.633186045605099,
+                "outliers_removed": []
+              },
+              "target_metric_applied": 5100000000.0,
+              "implied_enterprise_values": {
+                "mean": 30810325051.203102,
+                "median": 21964091180.083946
+              }
+            },
+            "EV_EBITDA": {
+              "peer_multiples_used": [
+                11.155268009023079,
+                96.27385068921545,
+                35.779478488974185,
+                93.78553454104187,
+                10.816286786188128,
+                26.574250230550824,
+                39.23711796015936
+              ],
+              "statistics_after_outlier_screening": {
+                "mean": 44.803112386450415,
+                "median": 35.779478488974185,
+                "min": 10.816286786188128,
+                "max": 96.27385068921545,
+                "std_dev": 33.339153312928204,
+                "outliers_removed": []
+              },
+              "target_metric_applied": null,
+              "implied_enterprise_values": {}
+            }
+          }
+        },
+        {
+          "_comment_step_6_7": "Steps 6–7 – implied valuation results and adjustments",
+          "description": "Final valuation summary",
+          "data": {
+            "valuation_summary": {
+              "target_company": "Stripe",
+              "valuation_date": "2025-11-13",
+              "revenue_based_valuation_mean": 30810325051.203102,
+              "revenue_based_valuation_median": 21964091180.083946,
+              "ebitda_based_valuation_mean": null,
+              "ebitda_based_valuation_median": null,
+              "mean_avereage_valuation": 30810325051.203102,
+              "median_average_valuation": 21964091180.083946
+            },
+            "adjustments": {
+              "note": "Calculation using mean and median of peer multiples with outlier detection (z-score threshold = 2.0)"
+            }
+          }
+        }
+      ],
+      "data_sources": {
+        "peer_financials_source": "yfinance",
+        "peer_count": 10
+      }
+    },
+    "_comment_metadata": "Execution metadata for traceability",
+    "metadata": {
+      "calculation_time_ms": 3,
+      "multiples_used": [
+        "EV_REVENUE",
+        "EV_EBITDA"
+      ]
+    }
+  }

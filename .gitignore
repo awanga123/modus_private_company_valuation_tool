@@ -10,9 +10,9 @@ wheels/
 .venv
 compass_artifact_wf-cc7ffed5-b71e-4eab-9998-1dc93f9dbbbc_text_markdown.md
 
+test_simplified.py
 Modus Take Home Assessment.pdf
 audit_trails/*
 cache/raw/*
 src/audit_trails/*
 src/cache/*
-test_simplified.py

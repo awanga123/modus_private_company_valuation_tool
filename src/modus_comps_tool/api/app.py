@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from fastapi import Depends, FastAPI, HTTPException
 
 from ..config.settings import settings
@@ -23,6 +24,16 @@ _data_fetcher = CompanyDataFetcher()
 def get_valuation_service() -> ValuationService:
     """Provide a service instance with shared data fetcher for cache efficiency."""
     return ValuationService(data_fetcher=_data_fetcher)
+
+
+@app.get("/peer-sectors")
+async def list_peer_sectors() -> dict[str, list[str]]:
+    """Return the sector keys available in the peer universe to make it easier for the user to select the appropriate sector."""
+    path = settings.absolute_peer_universe_path
+    with path.open("r", encoding="utf-8") as handle:
+        data = json.load(handle)
+    sectors = sorted(data.keys())
+    return {"sectors": sectors}
 
 
 @app.get("/health")
