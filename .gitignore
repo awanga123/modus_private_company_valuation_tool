@@ -15,3 +15,4 @@ audit_trails/*
 cache/raw/*
 src/audit_trails/*
 src/cache/*
+test_simplified.py
