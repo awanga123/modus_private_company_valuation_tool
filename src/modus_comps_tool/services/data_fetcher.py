@@ -6,11 +6,10 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-import pandas as pd
 import structlog
-import yfinance as yf
 
 from ..config.settings import settings
+from .financial_data_provider import IFinancialDataProvider, YFinanceProvider
 
 logger = structlog.get_logger(__name__)
 
@@ -28,17 +27,19 @@ class CachedItem:
 
 
 class CompanyDataFetcher:
-    """Fetch financial data for public tickers using yfinance with two-tier caching.
+    """Fetch financial data for public tickers with two-tier caching.
 
     Cache Strategy:
     - In-memory cache: Fast lookups for frequently accessed tickers (shared across requests when used as singleton)
     - Disk cache: Persists data between service restarts (24-hour TTL by default)
 
     This class should be instantiated as a singleton to maximize cache efficiency across requests.
+    Uses a pluggable data provider (default: yfinance) for flexibility.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, provider: IFinancialDataProvider | None = None) -> None:
         self._cache: dict[str, CachedItem] = {}
+        self.provider = provider or YFinanceProvider()
         settings.absolute_cache_dir.mkdir(parents=True, exist_ok=True)
 
     def fetch(self, ticker: str) -> dict[str, Any]:
@@ -57,13 +58,10 @@ class CompanyDataFetcher:
 
         logger.info("cache.miss", ticker=ticker)
 
-        # if the cache is missed, fetch the data from yfinance directly and log the raw output
-        # https://ranaroussi.github.io/yfinance/index.html for more information on the yfinance API
-        company = yf.Ticker(ticker)
-
-        info = company.info or {}
-        balance_sheet = self._df_to_latest(company.balance_sheet)
-        financials = self._df_to_latest(company.financials)
+        # Fetch data using the configured provider (yfinance by default)
+        info = self.provider.fetch_company_info(ticker)
+        balance_sheet = self.provider.fetch_balance_sheet(ticker)
+        financials = self.provider.fetch_financials(ticker)
 
         # Log the raw yfinance output
         logger.info(
@@ -152,13 +150,3 @@ class CompanyDataFetcher:
             payload=payload,
         )
         self._cache[ticker] = cached
-
-    @staticmethod
-    def _df_to_latest(df: pd.DataFrame | None) -> dict[str, Any]:
-        """Convert the first (most recent) column of a yfinance DataFrame into a dict."""
-        if df is None or df.empty:
-            return {}
-
-        latest_col = df.columns[0]
-        return {index: float(value) for index, value in df[latest_col].items() if pd.notna(value)}
-

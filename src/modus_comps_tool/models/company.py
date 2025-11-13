@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import Optional
+from pydantic import BaseModel, ConfigDict, Field, NonNegativeInt, PositiveFloat, field_validator
 
-from pydantic import BaseModel, ConfigDict, Field, NonNegativeInt, PositiveFloat
+from ..config.settings import settings
 
 
 class TargetCompany(BaseModel):
@@ -19,10 +19,25 @@ class TargetCompany(BaseModel):
 
 
 class PeerFilters(BaseModel):
-    revenue_range: tuple[float, float] | None = (200_000_000, 2_000_000_000) # $100M - $2B in revenue for default range if not specificed 
+    revenue_range: tuple[float, float] | None = Field(
+        default_factory=lambda: (settings.default_revenue_range_min, settings.default_revenue_range_max),
+        description="Min and max annual revenue range for peer filtering",
+    )
     exclude_negative_ebitda: bool = True
-    saas_only: bool = False 
+    saas_only: bool = False
     focus_fashion_only: bool = False
+
+    @field_validator("revenue_range")
+    @classmethod
+    def validate_revenue_range(cls, v: tuple[float, float] | None) -> tuple[float, float] | None:
+        """Ensure min revenue is less than max revenue."""
+        if v is not None:
+            min_val, max_val = v
+            if min_val < 0 or max_val < 0:
+                raise ValueError("Revenue range values must be non-negative")
+            if min_val >= max_val:
+                raise ValueError(f"Min revenue ({min_val:,.0f}) must be less than max revenue ({max_val:,.0f})")
+        return v
 
 
 class PeerSelectionConfig(BaseModel):
@@ -35,7 +50,10 @@ class ValuationConfig(BaseModel):
     multiples: list[str] = Field(default_factory=list)
     statistics: list[str] = Field(default_factory=lambda: ["median"])
     apply_dlom: bool = False
-    dlom_percentage: float = 0.10 # 10% default discount for lack of marketability if not specified if apply_dlom is true
+    dlom_percentage: float = Field(
+        default_factory=lambda: settings.default_dlom_percentage,
+        description="Discount for lack of marketability, applied if apply_dlom is True",
+    )
 
 
 class ValuationRequest(BaseModel):

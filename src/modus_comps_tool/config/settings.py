@@ -18,6 +18,16 @@ class AppSettings(BaseSettings):
     peer_universe_path: Path = Path("src/modus_comps_tool/data/peer_universe.json")
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
 
+    # Default valuation configuration
+    default_revenue_range_min: int = 200_000_000  # $200M
+    default_revenue_range_max: int = 2_000_000_000  # $2B
+    default_dlom_percentage: float = 0.10  # 10% discount for lack of marketability
+
+    # API timeout and retry configuration
+    api_timeout_seconds: int = 30  # Timeout for external API calls
+    api_retry_attempts: int = 3  # Number of retry attempts for failed API calls
+    api_retry_backoff_factor: float = 0.5  # Exponential backoff multiplier
+
     @property
     def project_root(self) -> Path:
         return Path(__file__).resolve().parents[3]

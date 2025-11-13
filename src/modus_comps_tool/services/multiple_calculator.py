@@ -43,13 +43,10 @@ class MultipleCalculator:
             results.append(calculator(peer))
         return results
 
-    #helper function to safely divide two numbers and return None if the denominator is 0 or None to avoid errors
     @staticmethod
     def _safe_divide(numerator: float | None, denominator: float | None) -> float | None:
-        """Guard against divide-by-zero and ``None`` operands."""
-        if numerator is None or denominator in (None, 0):
-            return None
-        if denominator == 0:
+        """Guard against divide-by-zero and None operands."""
+        if numerator is None or denominator is None or denominator == 0:
             return None
         return float(numerator) / float(denominator)
 

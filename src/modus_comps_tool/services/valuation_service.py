@@ -1,19 +1,18 @@
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Iterable
+from typing import Any, Iterable
 from uuid import uuid4
 
 import numpy as np
 import structlog
 
-from ..config.settings import settings
 from ..models.audit import AuditCalculationStep, AuditTrail, ValuationMultipleAnalysis, ValuationResult
 from ..models.company import PeerSelectionConfig, TargetCompany, ValuationConfig, ValuationRequest
 from ..models.peer_group import PeerGroup
 from ..models.valuation_multiple import ValuationMultiple
+from .audit_persistence import AuditPersistence
 from .data_fetcher import CompanyDataFetcher
 from .multiple_calculator import MultipleCalculator, MultipleResult
 from .peer_selector import PeerSelector
@@ -33,20 +32,21 @@ class ValuationContext:
 
 
 class ValuationService:
-    """Coordinate peer selection, data fetching, multiple analysis, and audit logging."""
+    """Orchestrate valuation workflow including peer selection, data fetching, and multiple analysis."""
 
-    # Initialize all the modules used in the valuation service 
     def __init__(
         self,
         peer_selector: PeerSelector | None = None,
         data_fetcher: CompanyDataFetcher | None = None,
         multiple_calculator: MultipleCalculator | None = None,
         stats_engine: StatsEngine | None = None,
+        audit_persistence: AuditPersistence | None = None,
     ) -> None:
         self.peer_selector = peer_selector or PeerSelector()
         self.data_fetcher = data_fetcher or CompanyDataFetcher()
         self.multiple_calculator = multiple_calculator or MultipleCalculator()
         self.stats_engine = stats_engine or StatsEngine()
+        self.audit_persistence = audit_persistence or AuditPersistence()
 
     def valuate(self, request: ValuationRequest) -> ValuationResult:
         """Execute the simplified valuation workflow for the supplied request."""
@@ -192,7 +192,7 @@ class ValuationService:
             },
         )
 
-        self._persist_audit_trail(result)
+        self.audit_persistence.persist(result)
         return result
 
     def _populate_peers(self, ctx: ValuationContext) -> dict[str, dict]:
@@ -218,9 +218,16 @@ class ValuationService:
                     ctx.peer_group.notes.append(
                         f"Incomplete data for {peer.ticker}: enterprise_value={peer.enterprise_value}, revenue={peer.revenue}"
                     )
-            except Exception as exc:  # capture all exceptions to keep audit trail
-                logger.exception("peer_fetch.failure", ticker=peer.ticker, error=str(exc))
-                ctx.peer_group.notes.append(f"Failed to fetch data for {peer.ticker}: {exc}")
+            except (ConnectionError, TimeoutError) as exc:
+                logger.warning("peer_fetch.network_error", ticker=peer.ticker, error_type=type(exc).__name__)
+                ctx.peer_group.notes.append(f"Network error fetching data for {peer.ticker}")
+            except (KeyError, ValueError, TypeError) as exc:
+                logger.error("peer_fetch.data_error", ticker=peer.ticker, error=str(exc))
+                ctx.peer_group.notes.append(f"Data format error for {peer.ticker}")
+            except Exception as exc:
+                # Catch remaining exceptions but log them clearly
+                logger.exception("peer_fetch.unexpected_error", ticker=peer.ticker, error_type=type(exc).__name__)
+                ctx.peer_group.notes.append(f"Unable to retrieve financial data for {peer.ticker}")
         return financials
 
     def _calculate_multiples(
@@ -255,21 +262,11 @@ class ValuationService:
         ctx: ValuationContext,
     ) -> dict[str, ValuationMultipleAnalysis]:
         """Calculate mean and median with outlier detection using z-score threshold."""
-        # group the multiple calculations by the type of multiple they are, ie either EV_REVENUE or EV_EBITDA
-        # the output of grouped is a dictionary with the key being the type of multiple and the value being a list of MultipleResult objects
-        grouped: dict[ValuationMultiple, list[MultipleResult]] = {}
-        for result in multiple_results:
-            grouped.setdefault(result.multiple, []).append(result)
+        grouped = self._group_results_by_multiple(multiple_results)
 
         analyses: dict[str, ValuationMultipleAnalysis] = {}
-        # iterate over the grouped multiple results and calculate the mean and median for each multiple type 
         for multiple, results in grouped.items():
-            # get the numeric results for the multiple, ie either the revenue or ebitda values for the target company
-            numeric_results = [(idx, res) for idx, res in enumerate(results) if res.value is not None]
-            # get the values for the multiple, ie either the revenue or ebitda values for the target company
-            raw_values = [res.value for _, res in numeric_results]
-
-            # get the target company's metric value for the multiple, ie either it's revenue or ebitda
+            numeric_results, raw_values = self._extract_numeric_values(results)
             metric_value = self._target_company_metric_value(multiple, ctx.target_company)
 
             logger.info(
@@ -279,33 +276,13 @@ class ValuationService:
                 count=len(raw_values),
             )
 
-            # if there are no raw values, then we know that peer comapnies did not have any data for this multiple type 
             if not raw_values:
-                analyses[multiple.value] = ValuationMultipleAnalysis(
-                    values=[],
-                    mean=None,
-                    median=None,
-                    min=None,
-                    max=None,
-                    std_dev=None,
-                    outliers_excluded=[],
-                    target_metric=metric_value,
-                    implied_values={},
-                )
+                analyses[multiple.value] = self._create_empty_analysis(metric_value)
                 continue
 
-            # Use StatsEngine to detect outliers and calculate statistics
-            summary_all = self.stats_engine.summarize(raw_values)
-            outlier_indices = set(summary_all.outlier_indices)
-            filtered_values = [
-                value for idx, value in enumerate(raw_values) if idx not in outlier_indices
-            ]
-            summary_filtered = self.stats_engine.summarize(filtered_values) if filtered_values else summary_all
-
-            outliers_excluded = []
-            for idx in outlier_indices:
-                result = numeric_results[idx][1]
-                outliers_excluded.append(f"{result.ticker}: {result.value}")
+            summary_filtered, outliers_excluded = self._detect_and_filter_outliers(
+                raw_values, numeric_results
+            )
 
             logger.info(
                 "valuation.simple_average",
@@ -315,27 +292,9 @@ class ValuationService:
                 target_metric=metric_value,
             )
 
-            implied_values: dict[str, float] = {}
-            if metric_value is not None:
-                # Calculate implied valuations for both mean and median
-                if summary_filtered.mean is not None:
-                    implied_values["mean"] = summary_filtered.mean * metric_value
-                    logger.info(
-                        "valuation.implied_value",
-                        multiple=multiple.value,
-                        stat="mean",
-                        calculation=f"{summary_filtered.mean:.2f} × {metric_value:,.0f}",
-                        result=implied_values["mean"],
-                    )
-                if summary_filtered.median is not None:
-                    implied_values["median"] = summary_filtered.median * metric_value
-                    logger.info(
-                        "valuation.implied_value",
-                        multiple=multiple.value,
-                        stat="median",
-                        calculation=f"{summary_filtered.median:.2f} × {metric_value:,.0f}",
-                        result=implied_values["median"],
-                    )
+            implied_values = self._calculate_implied_values(
+                summary_filtered, metric_value, multiple.value
+            )
 
             analyses[multiple.value] = ValuationMultipleAnalysis(
                 values=raw_values,
@@ -350,6 +309,111 @@ class ValuationService:
             )
 
         return analyses
+
+    def _group_results_by_multiple(
+        self, multiple_results: list[MultipleResult]
+    ) -> dict[ValuationMultiple, list[MultipleResult]]:
+        """Group multiple results by their type (EV_REVENUE or EV_EBITDA)."""
+        grouped: dict[ValuationMultiple, list[MultipleResult]] = {}
+        for result in multiple_results:
+            grouped.setdefault(result.multiple, []).append(result)
+        return grouped
+
+    def _extract_numeric_values(
+        self, results: list[MultipleResult]
+    ) -> tuple[list[tuple[int, MultipleResult]], list[float]]:
+        """Extract numeric values from results, filtering out None values."""
+        numeric_results = [(idx, res) for idx, res in enumerate(results) if res.value is not None]
+        raw_values = [res.value for _, res in numeric_results]
+        return numeric_results, raw_values
+
+    def _detect_and_filter_outliers(
+        self, raw_values: list[float], numeric_results: list[tuple[int, MultipleResult]]
+    ) -> tuple[Any, list[str]]:
+        """Detect outliers using z-score and return filtered statistics."""
+        summary_all = self.stats_engine.summarize(raw_values)
+        outlier_indices = set(summary_all.outlier_indices)
+
+        filtered_values = [
+            value for idx, value in enumerate(raw_values) if idx not in outlier_indices
+        ]
+        summary_filtered = self.stats_engine.summarize(filtered_values) if filtered_values else summary_all
+
+        outliers_excluded = self._format_outliers(outlier_indices, numeric_results)
+
+        return summary_filtered, outliers_excluded
+
+    def _format_outliers(
+        self, outlier_indices: set[int], numeric_results: list[tuple[int, MultipleResult]]
+    ) -> list[str]:
+        """Format outlier information as human-readable strings."""
+        outliers_excluded = []
+        for idx in outlier_indices:
+            result = numeric_results[idx][1]
+            outliers_excluded.append(f"{result.ticker}: {result.value}")
+        return outliers_excluded
+
+    def _calculate_implied_values(
+        self, summary: Any, metric_value: float | None, multiple_name: str
+    ) -> dict[str, float]:
+        """Calculate implied enterprise values using mean and median multiples."""
+        implied_values: dict[str, float] = {}
+
+        if metric_value is None:
+            return implied_values
+
+        if summary.mean is not None:
+            implied_values["mean"] = summary.mean * metric_value
+            logger.info(
+                "valuation.implied_value",
+                multiple=multiple_name,
+                stat="mean",
+                calculation=f"{summary.mean:.2f} × {metric_value:,.0f}",
+                result=implied_values["mean"],
+            )
+
+        if summary.median is not None:
+            implied_values["median"] = summary.median * metric_value
+            logger.info(
+                "valuation.implied_value",
+                multiple=multiple_name,
+                stat="median",
+                calculation=f"{summary.median:.2f} × {metric_value:,.0f}",
+                result=implied_values["median"],
+            )
+
+        return implied_values
+
+    def _create_empty_analysis(self, metric_value: float | None) -> ValuationMultipleAnalysis:
+        """Create an empty analysis when no peer data is available."""
+        return ValuationMultipleAnalysis(
+            values=[],
+            mean=None,
+            median=None,
+            min=None,
+            max=None,
+            std_dev=None,
+            outliers_excluded=[],
+            target_metric=metric_value,
+            implied_values={},
+        )
+
+    def _get_implied_value(
+        self, multiple_analysis: dict[str, ValuationMultipleAnalysis], multiple_key: str, stat_key: str
+    ) -> float | None:
+        """Extract implied value for a specific multiple and statistic (mean/median)."""
+        default_analysis = ValuationMultipleAnalysis(
+            values=[],
+            mean=None,
+            median=None,
+            min=None,
+            max=None,
+            std_dev=None,
+            outliers_excluded=[],
+            target_metric=None,
+            implied_values={},
+        )
+        return multiple_analysis.get(multiple_key, default_analysis).implied_values.get(stat_key)
 
     def _summarize_results_simple(
         self,
@@ -387,22 +451,10 @@ class ValuationService:
             return summary_base, {}
 
         # Extract specific valuations for both mean and median
-        revenue_mean = multiple_analysis.get("EV_REVENUE", ValuationMultipleAnalysis(
-            values=[], mean=None, median=None, min=None, max=None, std_dev=None,
-            outliers_excluded=[], target_metric=None, implied_values={}
-        )).implied_values.get("mean")
-        revenue_median = multiple_analysis.get("EV_REVENUE", ValuationMultipleAnalysis(
-            values=[], mean=None, median=None, min=None, max=None, std_dev=None,
-            outliers_excluded=[], target_metric=None, implied_values={}
-        )).implied_values.get("median")
-        ebitda_mean = multiple_analysis.get("EV_EBITDA", ValuationMultipleAnalysis(
-            values=[], mean=None, median=None, min=None, max=None, std_dev=None,
-            outliers_excluded=[], target_metric=None, implied_values={}
-        )).implied_values.get("mean")
-        ebitda_median = multiple_analysis.get("EV_EBITDA", ValuationMultipleAnalysis(
-            values=[], mean=None, median=None, min=None, max=None, std_dev=None,
-            outliers_excluded=[], target_metric=None, implied_values={}
-        )).implied_values.get("median")
+        revenue_mean = self._get_implied_value(multiple_analysis, "EV_REVENUE", "mean")
+        revenue_median = self._get_implied_value(multiple_analysis, "EV_REVENUE", "median")
+        ebitda_mean = self._get_implied_value(multiple_analysis, "EV_EBITDA", "mean")
+        ebitda_median = self._get_implied_value(multiple_analysis, "EV_EBITDA", "median")
 
         summary_base["revenue_based_valuation_mean"] = revenue_mean
         summary_base["revenue_based_valuation_median"] = revenue_median
@@ -427,22 +479,7 @@ class ValuationService:
 
         return summary_base, adjustments
 
-    def _persist_audit_trail(self, result: ValuationResult) -> None:
-        settings.absolute_audit_trail_dir.mkdir(parents=True, exist_ok=True)
-        path = settings.absolute_audit_trail_dir / f"{result.request_id}.json"
-        payload = result.model_dump(mode="json")
-        with path.open("w", encoding="utf-8") as fh:
-            json.dump(payload, fh, indent=2)
-        logger.info("audit.persisted", request_id=result.request_id, path=str(path))
-
     def load_result(self, request_id: str) -> ValuationResult | None:
         """Load a previously generated valuation result from disk."""
-        path = settings.absolute_audit_trail_dir / f"{request_id}.json"
-        if not path.exists():
-            return None
-
-        with path.open("r", encoding="utf-8") as fh:
-            data = json.load(fh)
-
-        return ValuationResult.model_validate(data)
+        return self.audit_persistence.load(request_id)
 
