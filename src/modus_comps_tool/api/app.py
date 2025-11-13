@@ -36,7 +36,7 @@ async def create_valuation(
     payload: ValuationRequestPayload,
     service: ValuationService = Depends(get_valuation_service),
 ) -> ValuationSummaryResponse:
-    """Run the valuation workflow and return the summary of the audit trail."""
+    """Run the valuation workflow and return the summary of the valuation analysisl."""
     result = service.valuate(payload)
     return ValuationSummaryResponse.from_domain(result)
 
@@ -46,7 +46,7 @@ async def get_valuation(
     request_id: str,
     service: ValuationService = Depends(get_valuation_service),
 ) -> ValuationResponse:
-    """Retrieve a previously generated valuation run by its request id."""
+    """Retrieve a previously generated valuation run's audit trail."""
     result = service.load_result(request_id)
     if result is None:
         raise HTTPException(status_code=404, detail="Valuation not found")

@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Any
 
 from pydantic import BaseModel
 
@@ -18,7 +19,7 @@ class ValuationSummaryResponse(BaseModel):
     peer_analysis: dict
     multiple_analysis: dict
     adjustments: dict
-    audit_summary: list[str]
+    audit_summary: dict[str, dict[str, Any]]
     metadata: dict
 
     @classmethod
@@ -29,7 +30,7 @@ class ValuationSummaryResponse(BaseModel):
             peer_analysis=result.peer_analysis,
             multiple_analysis={key: value.model_dump() for key, value in result.multiple_analysis.items()},
             adjustments=result.adjustments,
-            audit_summary=[step.description for step in result.audit_trail.calculation_steps],
+            audit_summary={step.description: step.data for step in result.audit_trail.calculation_steps},
             metadata=result.metadata,
         )
 

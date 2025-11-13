@@ -1418,22 +1418,6 @@
   ],
   "Financial Technology": [
     {
-      "ticker": "ADYE.AS",
-      "name": "Adyen N.V.",
-      "sic_codes": [
-        "7389"
-      ],
-      "sector": "Technology",
-      "industry": "Financial Technology"
-    },
-    {
-      "ticker": "ADYEN",
-      "name": "Adyen",
-      "subsector": "Payment Processing",
-      "sector": "Financial Technology",
-      "industry": "Financial Technology"
-    },
-    {
       "ticker": "AFRM",
       "name": "Affirm",
       "subsector": "BNPL",
