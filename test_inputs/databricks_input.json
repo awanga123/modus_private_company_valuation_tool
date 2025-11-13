@@ -1,0 +1,72 @@
+{
+  "target_company": {
+    "name": "Databricks",
+    "ticker": null,
+    "industry": "Enterprise Software",
+    "sector": "Data Analytics & AI Platform",
+    "sic_code": "7372",
+    "founded_year": 2013,
+    "headquarters": "San Francisco, CA",
+    "business_model": "SaaS Data Lakehouse Platform",
+    "description": "Cloud-based data engineering, data science, and machine learning platform"
+  },
+  "financials": {
+    "arr": 4000000000,
+    "arr_date": "Q2 2025",
+    "revenue": 3700000000,
+    "revenue_year": 2024,
+    "ebitda": null,
+    "gross_margin": 0.75,
+    "revenue_growth_yoy": 0.50,
+    "net_expansion_rate": 1.40,
+    "ai_products_arr": 1000000000,
+    "profitability_status": "Positive Free Cash Flow (last 12 months)"
+  },
+  "known_valuation": {
+    "amount": 100000000000,
+    "date": "2025-09-08",
+    "round": "Series K",
+    "type": "Primary funding round",
+    "funding_amount": 1000000000,
+    "valuation_multiple_arr": 25.0,
+    "source": "Company announcement"
+  },
+  "valuation_request": {
+    "methodology": "comparable_company_analysis",
+    "multiples_to_calculate": ["EV_REVENUE", "EV_EBITDA"],
+    "apply_dlom": false,
+    "dlom_percentage": 0
+  },
+  "peer_selection": {
+    "method": "custom",
+    "custom_tickers": ["SNOW", "MDB", "PLTR", "CFLT", "ESTC"],
+    "filters": {
+      "revenue_range": [500000000, 10000000000],
+      "exclude_negative_ebitda": false,
+      "saas_only": true,
+      "same_sector": true
+    },
+    "rationale": "Selected high-growth data infrastructure and analytics SaaS companies with similar enterprise focus"
+  },
+  "key_metrics": {
+    "total_customers": 10000,
+    "fortune_500_penetration": 0.60,
+    "average_contract_value": 208696,
+    "total_employees": 12312,
+    "sales_reps": 501,
+    "engineers": 683
+  },
+  "notes": {
+    "special_considerations": [
+      "Growing >50% YoY despite $4B+ ARR scale",
+      "140% net expansion rate shows strong land-and-expand",
+      "AI products already $1B ARR run-rate",
+      "Achieved positive free cash flow milestone",
+      "Leading position in data lakehouse category",
+      "Valuation increased 61% from Dec 2024 to Sept 2025"
+    ],
+    "data_quality": "ARR and revenue figures from company announcements. Using ARR as primary metric as it's more relevant for SaaS valuation.",
+    "valuation_context": "September 2025 Series K at $100B+ represents 61% step-up from December 2024's $62B valuation",
+    "comparability_notes": "Databricks competes with Snowflake but has broader ML/AI platform capabilities. Growing faster than public comps at similar scale."
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "target_company": {
+    "name": "SpaceX",
+    "ticker": null,
+    "industry": "Aerospace & Defense",
+    "sector": "Space Transportation",
+    "sic_code": "3761",
+    "founded_year": 2002,
+    "headquarters": "Hawthorne, CA / Brownsville, TX",
+    "business_model": "Launch Services + Satellite Internet",
+    "description": "Rocket and satellite company offering low-cost launches and global internet via Starlink"
+  },
+  "financials": {
+    "revenue": 14200000000,
+    "revenue_year": 2024,
+    "revenue_breakdown": {
+      "starlink": 7700000000,
+      "launch_services": 5500000000,
+      "other": 1000000000
+    },
+    "ebitda": null,
+    "gross_margin": null,
+    "revenue_growth_yoy": 0.63,
+    "profitability_status": "Profitable"
+  },
+  "known_valuation": {
+    "amount": 350000000000,
+    "date": "2024-12-15",
+    "round": "Secondary tender",
+    "type": "Employee and investor secondary sale",
+    "share_price": 185.00,
+    "valuation_multiple_revenue": 24.6,
+    "source": "Bloomberg and multiple financial news outlets"
+  },
+  "valuation_request": {
+    "methodology": "comparable_company_analysis",
+    "multiples_to_calculate": ["EV_REVENUE", "EV_EBITDA"],
+    "apply_dlom": false,
+    "dlom_percentage": 0
+  },
+  "peer_selection": {
+    "method": "custom",
+    "custom_tickers": ["BA", "LMT", "NOC", "LHX", "VSAT"],
+    "filters": {
+      "revenue_range": [5000000000, 100000000000],
+      "exclude_negative_ebitda": false,
+      "same_sector": true
+    },
+    "rationale": "Selected aerospace, defense, and satellite communications companies. Note: SpaceX is unique with dual business model (launch + Starlink)"
+  },
+  "key_metrics": {
+    "launches_2024": 134,
+    "market_share_orbital_payloads": 0.85,
+    "starlink_subscribers": 4600000,
+    "launch_cost_falcon9": 60000000,
+    "launch_cost_falcon_heavy": 125000000
+  },
+  "notes": {
+    "special_considerations": [
+      "Dominant market position with 85%+ of orbital payloads",
+      "Starlink represents 54% of revenue with high growth",
+      "Reusable rocket technology creates significant cost advantage",
+      "Valuation grew 67% from June to December 2024",
+      "Premium multiple reflects market dominance and Starship potential"
+    ],
+    "data_quality": "Revenue figures compiled from industry reports and company disclosures. Private company does not publish detailed financials.",
+    "valuation_context": "December 2024 tender offer at $350B makes SpaceX the world's most valuable private company",
+    "comparability_notes": "Traditional aerospace comparables may not capture SpaceX's unique position combining launch services with recurring Starlink revenue"
+  }
+}

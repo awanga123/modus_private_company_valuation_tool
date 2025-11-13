@@ -1,0 +1,72 @@
+{
+  "target_company": {
+    "name": "Canva",
+    "ticker": null,
+    "industry": "Creative Software",
+    "sector": "Design & Collaboration Tools",
+    "sic_code": "7372",
+    "founded_year": 2012,
+    "headquarters": "Sydney, Australia",
+    "business_model": "Freemium SaaS Design Platform",
+    "description": "Web-based graphic design platform with AI-powered tools for individuals and teams"
+  },
+  "financials": {
+    "arr": 3300000000,
+    "arr_date": "August 2025",
+    "revenue": 2700000000,
+    "revenue_year": 2024,
+    "ebitda": 349800000,
+    "net_profit_margin": 0.106,
+    "gross_margin": 0.75,
+    "revenue_growth_yoy": 0.18,
+    "profitability_status": "Profitable (7+ years)"
+  },
+  "known_valuation": {
+    "amount": 42000000000,
+    "date": "2025-08-20",
+    "round": "Secondary Market - IV",
+    "type": "Employee share sale",
+    "valuation_multiple_arr": 12.7,
+    "valuation_multiple_revenue": 15.6,
+    "source": "CBInsights and financial news reports"
+  },
+  "valuation_request": {
+    "methodology": "comparable_company_analysis",
+    "multiples_to_calculate": ["EV_REVENUE", "EV_EBITDA"],
+    "apply_dlom": false,
+    "dlom_percentage": 0
+  },
+  "peer_selection": {
+    "method": "custom",
+    "custom_tickers": ["ADBE", "ADSK", "MNDY", "WIX"],
+    "filters": {
+      "revenue_range": [1000000000, 30000000000],
+      "exclude_negative_ebitda": true,
+      "saas_only": true,
+      "same_sector": true
+    },
+    "rationale": "Selected creative software and collaboration platform companies. Adobe is included despite size difference as closest comparable for design tools."
+  },
+  "key_metrics": {
+    "monthly_active_users": 240000000,
+    "enterprise_customers_1000plus_employees": 130000,
+    "fortune_500_penetration": 0.95,
+    "ai_tool_uses_per_month": 800000000,
+    "ai_usage_growth_yoy": 7.00,
+    "total_employees": 5500,
+    "countries_served": 190
+  },
+  "notes": {
+    "special_considerations": [
+      "Massive user base of 240M MAU with strong freemium model",
+      "95%+ Fortune 500 adoption shows enterprise traction",
+      "AI usage growing 700% YoY (800M uses/month)",
+      "Consistently profitable for 7+ years",
+      "Strong pricing power - raised Canva Teams from $300 to $500/year",
+      "Competing directly with Adobe in democratized design space"
+    ],
+    "data_quality": "ARR and revenue from company announcements and Sacra estimates. EBITDA estimated at ~10.6% net profit margin.",
+    "valuation_context": "August 2025 secondary at $42B continues upward trend from $32B (Oct 2024) and $26B (Apr 2024). Peak was $40B in 2021.",
+    "comparability_notes": "Canva's freemium model and consumer+enterprise hybrid is unique. Adobe is much larger but serves similar market. Monday.com represents collaboration platform comparison."
+  }
+}

@@ -1,0 +1,1980 @@
+{
+  "AI & Machine Learning": [
+    {
+      "ticker": "AI",
+      "name": "C3.ai",
+      "subsector": "Enterprise AI",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "BBAI",
+      "name": "BigBear.ai",
+      "subsector": "AI Analytics",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "subsector": "AI/Cloud",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "META",
+      "name": "Meta",
+      "subsector": "AI Research",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "subsector": "AI/Cloud",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "subsector": "AI Infrastructure",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "PATH",
+      "name": "UiPath",
+      "subsector": "AI/RPA",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "subsector": "AI Platforms",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "RXRX",
+      "name": "Recursion",
+      "subsector": "AI Drug Discovery",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "SDGR",
+      "name": "Schrodinger",
+      "subsector": "AI Drug Discovery",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "subsector": "AI Data Cloud",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "SOUN",
+      "name": "SoundHound",
+      "subsector": "Voice AI",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    },
+    {
+      "ticker": "UPST",
+      "name": "Upstart",
+      "subsector": "AI Lending",
+      "sector": "AI & Machine Learning",
+      "industry": "AI & Machine Learning"
+    }
+  ],
+  "Aerospace & Defense": [
+    {
+      "ticker": "BA",
+      "name": "The Boeing Company",
+      "sic_codes": [
+        "3721",
+        "3761"
+      ],
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense"
+    },
+    {
+      "ticker": "LMT",
+      "name": "Lockheed Martin Corporation",
+      "sic_codes": [
+        "3761"
+      ],
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense"
+    },
+    {
+      "ticker": "NOC",
+      "name": "Northrop Grumman Corporation",
+      "sic_codes": [
+        "3761"
+      ],
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense"
+    },
+    {
+      "ticker": "LHX",
+      "name": "L3Harris Technologies, Inc.",
+      "sic_codes": [
+        "3812"
+      ],
+      "sector": "Industrials",
+      "industry": "Aerospace & Defense"
+    },
+    {
+      "ticker": "VSAT",
+      "name": "Viasat, Inc.",
+      "sic_codes": [
+        "3663"
+      ],
+      "sector": "Technology",
+      "industry": "Aerospace & Defense"
+    }
+  ],
+  "Biotechnology": [
+    {
+      "ticker": "ALNY",
+      "name": "Alnylam Pharmaceuticals",
+      "subsector": "RNAi Therapeutics",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "AMGN",
+      "name": "Amgen",
+      "subsector": "Biotech",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "ARWR",
+      "name": "Arrowhead Pharmaceuticals",
+      "subsector": "RNAi Therapeutics",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "BEAM",
+      "name": "Beam Therapeutics",
+      "subsector": "Base Editing",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "BIIB",
+      "name": "Biogen",
+      "subsector": "Neurology",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "BLUE",
+      "name": "bluebird bio",
+      "subsector": "Gene Therapy",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "BMRN",
+      "name": "BioMarin Pharmaceutical",
+      "subsector": "Rare Disease",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "BNTX",
+      "name": "BioNTech",
+      "subsector": "mRNA Therapeutics",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "CRSP",
+      "name": "CRISPR Therapeutics",
+      "subsector": "Gene Editing",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "EXAS",
+      "name": "Exact Sciences",
+      "subsector": "Diagnostics",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "FATE",
+      "name": "Fate Therapeutics",
+      "subsector": "Cell Therapy",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "GILD",
+      "name": "Gilead Sciences",
+      "subsector": "Biotech",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "INCY",
+      "name": "Incyte",
+      "subsector": "Oncology",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "IONS",
+      "name": "Ionis Pharmaceuticals",
+      "subsector": "RNA Therapeutics",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "MRNA",
+      "name": "Moderna",
+      "subsector": "mRNA Therapeutics",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "NBIX",
+      "name": "Neurocrine Biosciences",
+      "subsector": "Neurology",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "NTLA",
+      "name": "Intellia Therapeutics",
+      "subsector": "Gene Editing",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "REGN",
+      "name": "Regeneron",
+      "subsector": "Biotech",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "RXRX",
+      "name": "Recursion Pharmaceuticals",
+      "subsector": "AI Drug Discovery",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "SGEN",
+      "name": "Seagen",
+      "subsector": "Oncology",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "SRPT",
+      "name": "Sarepta Therapeutics",
+      "subsector": "Gene Therapy",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "TECH",
+      "name": "Bio-Techne",
+      "subsector": "Life Sciences Tools",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "UTHR",
+      "name": "United Therapeutics",
+      "subsector": "Rare Disease",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "VKTX",
+      "name": "Viking Therapeutics",
+      "subsector": "Metabolic Disease",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    },
+    {
+      "ticker": "VRTX",
+      "name": "Vertex Pharmaceuticals",
+      "subsector": "Rare Disease",
+      "sector": "Biotechnology",
+      "industry": "Biotechnology"
+    }
+  ],
+  "Cloud Infrastructure": [
+    {
+      "ticker": "AKAM",
+      "name": "Akamai",
+      "subsector": "CDN",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon (AWS)",
+      "subsector": "Public Cloud",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "CFLT",
+      "name": "Confluent",
+      "subsector": "Data Streaming",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "subsector": "PaaS",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "DDOG",
+      "name": "Datadog",
+      "subsector": "Cloud Monitoring",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "DLR",
+      "name": "Digital Realty",
+      "subsector": "Data Centers",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "DT",
+      "name": "Dynatrace",
+      "subsector": "Cloud Monitoring",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "EQIX",
+      "name": "Equinix",
+      "subsector": "Data Centers",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "FSLY",
+      "name": "Fastly",
+      "subsector": "Edge Cloud",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet (GCP)",
+      "subsector": "Public Cloud",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "MDB",
+      "name": "MongoDB",
+      "subsector": "Database",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft (Azure)",
+      "subsector": "Public Cloud",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "NET",
+      "name": "Cloudflare",
+      "subsector": "Edge Cloud",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "ORCL",
+      "name": "Oracle Cloud",
+      "subsector": "Public Cloud",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "subsector": "Data Warehouse",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    },
+    {
+      "ticker": "VMW",
+      "name": "VMware",
+      "subsector": "Virtualization",
+      "sector": "Cloud Infrastructure",
+      "industry": "Cloud Infrastructure"
+    }
+  ],
+  "Consumer Internet": [
+    {
+      "ticker": "ANGI",
+      "name": "Angi",
+      "subsector": "Home Services",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "BMBL",
+      "name": "Bumble",
+      "subsector": "Dating Apps",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "BROS",
+      "name": "Dutch Bros",
+      "subsector": "Food/Beverage App",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "CHGG",
+      "name": "Chegg",
+      "subsector": "Education",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "DUOL",
+      "name": "Duolingo",
+      "subsector": "Education",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "subsector": "Search/Digital Ads",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "IAC",
+      "name": "IAC",
+      "subsector": "Internet Holding Company",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "subsector": "Social Media",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "MTCH",
+      "name": "Match Group",
+      "subsector": "Dating Apps",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "NFLX",
+      "name": "Netflix",
+      "subsector": "Video Streaming",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "OPEN",
+      "name": "Opendoor",
+      "subsector": "Real Estate",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "PINS",
+      "name": "Pinterest",
+      "subsector": "Social Media",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "RBLX",
+      "name": "Roblox",
+      "subsector": "Gaming Platform",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "RDDT",
+      "name": "Reddit",
+      "subsector": "Social Media",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "SNAP",
+      "name": "Snap",
+      "subsector": "Social Media",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "SPOT",
+      "name": "Spotify",
+      "subsector": "Music Streaming",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "TRIP",
+      "name": "TripAdvisor",
+      "subsector": "Travel",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "YELP",
+      "name": "Yelp",
+      "subsector": "Local Reviews",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    },
+    {
+      "ticker": "Z",
+      "name": "Zillow",
+      "subsector": "Real Estate",
+      "sector": "Consumer Internet",
+      "industry": "Consumer Internet"
+    }
+  ],
+  "Creative Software": [
+    {
+      "ticker": "ADBE",
+      "name": "Adobe Inc.",
+      "sic_codes": [
+        "7372"
+      ],
+      "sector": "Technology",
+      "industry": "Software - Infrastructure"
+    },
+    {
+      "ticker": "ADSK",
+      "name": "Autodesk, Inc.",
+      "sic_codes": [
+        "7372"
+      ],
+      "sector": "Technology",
+      "industry": "Software - Application"
+    },
+    {
+      "ticker": "MNDY",
+      "name": "monday.com Ltd.",
+      "sic_codes": [
+        "7372"
+      ],
+      "sector": "Technology",
+      "industry": "Software - Application"
+    },
+    {
+      "ticker": "WIX",
+      "name": "Wix.com Ltd.",
+      "sic_codes": [
+        "7372"
+      ],
+      "sector": "Technology",
+      "industry": "Software - Application"
+    }
+  ],
+  "Cybersecurity": [
+    {
+      "ticker": "AKAM",
+      "name": "Akamai Technologies",
+      "subsector": "Edge Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "CHKP",
+      "name": "Check Point Software",
+      "subsector": "Network Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "CRWD",
+      "name": "CrowdStrike",
+      "subsector": "Endpoint Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "CSCO",
+      "name": "Cisco Systems",
+      "subsector": "Network/Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "CYBR",
+      "name": "CyberArk",
+      "subsector": "Privileged Access",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "FTNT",
+      "name": "Fortinet",
+      "subsector": "Network Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "GEN",
+      "name": "Gen Digital (Norton)",
+      "subsector": "Consumer Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "JNPR",
+      "name": "Juniper Networks",
+      "subsector": "Network Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "NET",
+      "name": "Cloudflare",
+      "subsector": "Cloud Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "OKTA",
+      "name": "Okta",
+      "subsector": "Identity Management",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "PANW",
+      "name": "Palo Alto Networks",
+      "subsector": "Network Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "PING",
+      "name": "Ping Identity",
+      "subsector": "Identity Management",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "QLYS",
+      "name": "Qualys",
+      "subsector": "Vulnerability Management",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "RBRK",
+      "name": "Rubrik",
+      "subsector": "Data Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "RPD",
+      "name": "Rapid7",
+      "subsector": "Security Analytics",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "S",
+      "name": "SentinelOne",
+      "subsector": "Endpoint Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "SAIL",
+      "name": "SailPoint",
+      "subsector": "Identity Governance",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "TENB",
+      "name": "Tenable",
+      "subsector": "Vulnerability Management",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "VRNS",
+      "name": "Varonis",
+      "subsector": "Data Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    },
+    {
+      "ticker": "ZS",
+      "name": "Zscaler",
+      "subsector": "Cloud Security",
+      "sector": "Cybersecurity",
+      "industry": "Cybersecurity"
+    }
+  ],
+  "Digital Advertising": [
+    {
+      "ticker": "APPS",
+      "name": "Digital Turbine",
+      "subsector": "Mobile Ads",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "CRTO",
+      "name": "Criteo",
+      "subsector": "Retargeting",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "DV",
+      "name": "DoubleVerify",
+      "subsector": "Ad Verification",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "subsector": "Search Ads",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "HUBS",
+      "name": "HubSpot",
+      "subsector": "Marketing Automation",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "IAS",
+      "name": "Integral Ad Science",
+      "subsector": "Ad Verification",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "subsector": "Social Media Ads",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "MGNI",
+      "name": "Magnite",
+      "subsector": "Ad Tech",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "PUBM",
+      "name": "PubMatic",
+      "subsector": "Ad Tech",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "RELY",
+      "name": "Remitly",
+      "subsector": "Performance Marketing",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "TTD",
+      "name": "The Trade Desk",
+      "subsector": "Programmatic Ads",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    },
+    {
+      "ticker": "ZI",
+      "name": "ZoomInfo",
+      "subsector": "B2B Marketing",
+      "sector": "Digital Advertising",
+      "industry": "Digital Advertising"
+    }
+  ],
+  "Enterprise Software": [
+    {
+      "ticker": "ACN",
+      "name": "Accenture",
+      "subsector": "IT Consulting",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "ADBE",
+      "name": "Adobe",
+      "subsector": "Creative/Marketing",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "ADSK",
+      "name": "Autodesk",
+      "subsector": "Design Software",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "ANSS",
+      "name": "ANSYS",
+      "subsector": "Engineering Software",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "BILL",
+      "name": "Bill.com",
+      "subsector": "AP Automation",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "BRZE",
+      "name": "Braze",
+      "subsector": "Customer Engagement",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "CDNS",
+      "name": "Cadence",
+      "subsector": "EDA",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "CFLT",
+      "name": "Confluent",
+      "sic_codes": [
+        "7372"
+      ],
+      "sector": "Technology",
+      "industry": "Enterprise Software",
+      "subsector": "Data Streaming"
+    },
+    {
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "subsector": "CRM",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "CTSH",
+      "name": "Cognizant",
+      "subsector": "IT Services",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "DASH",
+      "name": "DoorDash",
+      "subsector": "Logistics Platform",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "DDOG",
+      "name": "Datadog",
+      "subsector": "Observability",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "DOCN",
+      "name": "DigitalOcean",
+      "subsector": "Cloud Infrastructure",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "DOCU",
+      "name": "DocuSign",
+      "subsector": "Digital Transaction",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "DT",
+      "name": "Dynatrace",
+      "subsector": "Observability",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "ESTC",
+      "name": "Elastic",
+      "sic_codes": [
+        "7372"
+      ],
+      "sector": "Technology",
+      "industry": "Enterprise Software",
+      "subsector": "Search/Analytics"
+    },
+    {
+      "ticker": "FICO",
+      "name": "Fair Isaac (FICO)",
+      "subsector": "Analytics",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "FSLY",
+      "name": "Fastly",
+      "subsector": "Edge Cloud",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "GTLB",
+      "name": "GitLab",
+      "subsector": "DevOps",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "GWRE",
+      "name": "Guidewire",
+      "subsector": "Insurance Software",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "HASH",
+      "name": "HashiCorp",
+      "subsector": "Infrastructure Automation",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "HUBS",
+      "name": "HubSpot",
+      "subsector": "Marketing",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "IBM",
+      "name": "IBM",
+      "subsector": "Enterprise IT",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "INTU",
+      "name": "Intuit",
+      "subsector": "Financial Software",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "LINODE",
+      "name": "Akamai (Linode)",
+      "subsector": "Cloud Infrastructure",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "MDB",
+      "name": "MongoDB",
+      "sic_codes": [
+        "7372"
+      ],
+      "sector": "Technology",
+      "industry": "Enterprise Software",
+      "subsector": "Database"
+    },
+    {
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "subsector": "Productivity/Cloud",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "NCNO",
+      "name": "nCino",
+      "subsector": "Banking Software",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "NET",
+      "name": "Cloudflare",
+      "subsector": "Edge Platform",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "NEWR",
+      "name": "New Relic",
+      "subsector": "Observability",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "subsector": "IT Service Management",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "subsector": "Database/ERP",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "PATH",
+      "name": "UiPath",
+      "subsector": "RPA",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "PCOR",
+      "name": "Procore",
+      "subsector": "Construction",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "PD",
+      "name": "PagerDuty",
+      "subsector": "Incident Management",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "sic_codes": [
+        "7373"
+      ],
+      "sector": "Technology",
+      "industry": "Enterprise Software",
+      "subsector": "Data Analytics"
+    },
+    {
+      "ticker": "PTC",
+      "name": "PTC",
+      "subsector": "IoT/PLM",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "RNG",
+      "name": "RingCentral",
+      "subsector": "Cloud Communications",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "S",
+      "name": "SentinelOne",
+      "subsector": "Security Analytics",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "SAP",
+      "name": "SAP",
+      "subsector": "ERP",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "sic_codes": [
+        "7372"
+      ],
+      "sector": "Technology",
+      "industry": "Enterprise Software",
+      "subsector": "Data Warehouse"
+    },
+    {
+      "ticker": "SNPS",
+      "name": "Synopsys",
+      "subsector": "EDA",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "SPLK",
+      "name": "Splunk",
+      "subsector": "Security Analytics",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "SUMO",
+      "name": "Sumo Logic",
+      "subsector": "Log Analytics",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "TEAM",
+      "name": "Atlassian",
+      "subsector": "Collaboration",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "TWLO",
+      "name": "Twilio",
+      "subsector": "Communications API",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "TYL",
+      "name": "Tyler Technologies",
+      "subsector": "Government Software",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "U",
+      "name": "Unity Software",
+      "subsector": "Gaming Platform",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "VEEV",
+      "name": "Veeva Systems",
+      "subsector": "Life Sciences",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "WDAY",
+      "name": "Workday",
+      "subsector": "HR/Finance",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "ZI",
+      "name": "ZoomInfo",
+      "subsector": "B2B Data",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "ZM",
+      "name": "Zoom",
+      "subsector": "Communications",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    },
+    {
+      "ticker": "ZS",
+      "name": "Zscaler",
+      "subsector": "Cloud Security",
+      "sector": "Enterprise Software",
+      "industry": "Enterprise Software"
+    }
+  ],
+  "Fashion Retail": [
+    {
+      "ticker": "9983.T",
+      "name": "Fast Retailing Co., Ltd.",
+      "sic_codes": [
+        "5651"
+      ],
+      "sector": "Consumer Cyclical",
+      "industry": "Apparel Retail"
+    },
+    {
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "subsector": "Marketplace/Retail",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "BABA",
+      "name": "Alibaba",
+      "subsector": "China Marketplace",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "CHWY",
+      "name": "Chewy",
+      "subsector": "Pet Supplies",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "CPNG",
+      "name": "Coupang",
+      "subsector": "South Korea E-commerce",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "CVNA",
+      "name": "Carvana",
+      "subsector": "Auto E-commerce",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "EBAY",
+      "name": "eBay",
+      "subsector": "Marketplace",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "ETSY",
+      "name": "Etsy",
+      "subsector": "Handmade Marketplace",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "FTCH",
+      "name": "Farfetch",
+      "subsector": "Luxury Fashion",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "GPS",
+      "name": "The Gap, Inc.",
+      "sic_codes": [
+        "5651"
+      ],
+      "sector": "Consumer Cyclical",
+      "industry": "Apparel Retail"
+    },
+    {
+      "ticker": "HM-B.ST",
+      "name": "H & M Hennes & Mauritz AB",
+      "sic_codes": [
+        "5651"
+      ],
+      "sector": "Consumer Cyclical",
+      "industry": "Apparel Retail"
+    },
+    {
+      "ticker": "ITX.MC",
+      "name": "Industria de Dise\u00f1o Textil, S.A.",
+      "sic_codes": [
+        "5651"
+      ],
+      "sector": "Consumer Cyclical",
+      "industry": "Apparel Retail"
+    },
+    {
+      "ticker": "JD",
+      "name": "JD.com",
+      "subsector": "China Retail",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "JMIA",
+      "name": "Jumia",
+      "subsector": "Africa E-commerce",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "LULU",
+      "name": "Lululemon Athletica Inc.",
+      "sic_codes": [
+        "5651"
+      ],
+      "sector": "Consumer Cyclical",
+      "industry": "Apparel Retail"
+    },
+    {
+      "ticker": "MELI",
+      "name": "MercadoLibre",
+      "subsector": "Latin America Marketplace",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "OSTK",
+      "name": "Overstock",
+      "subsector": "Discount Retail",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "PDD",
+      "name": "PDD Holdings (Pinduoduo)",
+      "subsector": "China Marketplace",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "REAL",
+      "name": "RealReal",
+      "subsector": "Luxury Resale",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "RH",
+      "name": "RH (Restoration Hardware)",
+      "subsector": "Luxury Home",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "RVLV",
+      "name": "Revolve Group",
+      "subsector": "Fashion",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "SE",
+      "name": "Sea Limited",
+      "subsector": "Southeast Asia E-commerce",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "SHOP",
+      "name": "Shopify",
+      "subsector": "E-commerce Platform",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "TJX",
+      "name": "The TJX Companies, Inc.",
+      "sic_codes": [
+        "5651"
+      ],
+      "sector": "Consumer Cyclical",
+      "industry": "Apparel Retail"
+    },
+    {
+      "ticker": "W",
+      "name": "Wayfair",
+      "subsector": "Home Goods",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    },
+    {
+      "ticker": "WMT",
+      "name": "Walmart",
+      "subsector": "Omnichannel Retail",
+      "sector": "Fashion Retail",
+      "industry": "Fashion Retail"
+    }
+  ],
+  "Financial Technology": [
+    {
+      "ticker": "ADYE.AS",
+      "name": "Adyen N.V.",
+      "sic_codes": [
+        "7389"
+      ],
+      "sector": "Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "ADYEN",
+      "name": "Adyen",
+      "subsector": "Payment Processing",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "AFRM",
+      "name": "Affirm",
+      "subsector": "BNPL",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "AXP",
+      "name": "American Express",
+      "subsector": "Payment Networks",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "COIN",
+      "name": "Coinbase",
+      "subsector": "Crypto Exchange",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "DAVE",
+      "name": "Dave",
+      "subsector": "Neobank",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "FI",
+      "name": "Fiserv, Inc.",
+      "sic_codes": [
+        "7389"
+      ],
+      "sector": "Financial Services",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "FIS",
+      "name": "Fidelity National Information Services",
+      "sic_codes": [
+        "7389"
+      ],
+      "sector": "Financial Services",
+      "industry": "Financial Technology",
+      "subsector": "Financial Services Tech"
+    },
+    {
+      "ticker": "FISV",
+      "name": "Fiserv",
+      "subsector": "Financial Services Tech",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "FOUR",
+      "name": "Shift4 Payments",
+      "subsector": "Payment Processing",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "GPN",
+      "name": "Global Payments",
+      "subsector": "Payment Processing",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "HOOD",
+      "name": "Robinhood",
+      "subsector": "Trading Platform",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "LC",
+      "name": "LendingClub",
+      "subsector": "Lending",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "LMND",
+      "name": "Lemonade",
+      "subsector": "Insurtech",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "MA",
+      "name": "Mastercard",
+      "subsector": "Payment Networks",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "MELI",
+      "name": "MercadoLibre",
+      "subsector": "E-commerce/Fintech",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "NU",
+      "name": "Nu Holdings",
+      "subsector": "Digital Banking",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "PRTH",
+      "name": "Priority Technology Holdings",
+      "subsector": "Payment Processing",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "PYPL",
+      "name": "PayPal",
+      "sic_codes": [
+        "7389",
+        "6099"
+      ],
+      "sector": "Technology",
+      "industry": "Financial Technology",
+      "subsector": "Digital Payments"
+    },
+    {
+      "ticker": "ROOT",
+      "name": "Root Insurance",
+      "subsector": "Insurtech",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "SEZL",
+      "name": "Sezzle",
+      "subsector": "BNPL",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "SOFI",
+      "name": "SoFi Technologies",
+      "subsector": "Digital Banking",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "SQ",
+      "name": "Block (Square)",
+      "sic_codes": [
+        "6099"
+      ],
+      "sector": "Technology",
+      "industry": "Financial Technology",
+      "subsector": "Payment Processing"
+    },
+    {
+      "ticker": "STNE",
+      "name": "StoneCo",
+      "subsector": "Payment Processing",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "UPST",
+      "name": "Upstart",
+      "subsector": "Lending",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "V",
+      "name": "Visa",
+      "subsector": "Payment Networks",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    },
+    {
+      "ticker": "WEX",
+      "name": "WEX Inc",
+      "subsector": "Payment Processing",
+      "sector": "Financial Technology",
+      "industry": "Financial Technology"
+    }
+  ],
+  "Health Technology": [
+    {
+      "ticker": "ACCD",
+      "name": "Accolade",
+      "subsector": "Health Navigation",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "CLOV",
+      "name": "Clover Health",
+      "subsector": "Medicare Advantage",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "DOCS",
+      "name": "Doximity",
+      "subsector": "Physician Network",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "GDRX",
+      "name": "GoodRx",
+      "subsector": "Prescription Savings",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "HIMS",
+      "name": "Hims & Hers",
+      "subsector": "Telehealth",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "LFST",
+      "name": "LifeStance Health",
+      "subsector": "Mental Health",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "OMCL",
+      "name": "Omnicell",
+      "subsector": "Pharmacy Automation",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "OSCR",
+      "name": "Oscar Health",
+      "subsector": "Health Insurance",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "PGNY",
+      "name": "Progyny",
+      "subsector": "Fertility Benefits",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "PRVA",
+      "name": "Privia Health",
+      "subsector": "Care Enablement",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "SDGR",
+      "name": "Schrodinger",
+      "subsector": "Drug Discovery",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "TDOC",
+      "name": "Teladoc Health",
+      "subsector": "Telemedicine",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    },
+    {
+      "ticker": "VEEV",
+      "name": "Veeva Systems",
+      "subsector": "Life Sciences Software",
+      "sector": "Health Technology",
+      "industry": "Health Technology"
+    }
+  ],
+  "Logistics & Delivery": [
+    {
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "subsector": "E-commerce Logistics",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "CHRW",
+      "name": "C.H. Robinson",
+      "subsector": "Freight Brokerage",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "CPNG",
+      "name": "Coupang",
+      "subsector": "Last-Mile Delivery",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "DASH",
+      "name": "DoorDash",
+      "subsector": "Food Delivery",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "DIDI",
+      "name": "DiDi",
+      "subsector": "China Ride-Sharing",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "FDX",
+      "name": "FedEx",
+      "subsector": "Package Delivery",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "GRAB",
+      "name": "Grab",
+      "subsector": "Southeast Asia Delivery",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "JBHT",
+      "name": "J.B. Hunt",
+      "subsector": "Transportation",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "LYFT",
+      "name": "Lyft",
+      "subsector": "Ride-Sharing",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "UBER",
+      "name": "Uber",
+      "subsector": "Ride-Sharing/Delivery",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "UPS",
+      "name": "UPS",
+      "subsector": "Package Delivery",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    },
+    {
+      "ticker": "XPO",
+      "name": "XPO Logistics",
+      "subsector": "Logistics",
+      "sector": "Logistics & Delivery",
+      "industry": "Logistics & Delivery"
+    }
+  ],
+  "Semiconductors": [
+    {
+      "ticker": "ADI",
+      "name": "Analog Devices",
+      "subsector": "Analog Chips",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "AMAT",
+      "name": "Applied Materials",
+      "subsector": "Equipment",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "AMD",
+      "name": "Advanced Micro Devices",
+      "subsector": "CPU/GPU",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "ASML",
+      "name": "ASML Holding",
+      "subsector": "Lithography Equipment",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "subsector": "Diversified Chips",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "CDNS",
+      "name": "Cadence Design Systems",
+      "subsector": "EDA Software",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "ENTG",
+      "name": "Entegris",
+      "subsector": "Materials",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "INTC",
+      "name": "Intel",
+      "subsector": "CPU",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "KLAC",
+      "name": "KLA Corporation",
+      "subsector": "Process Control",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "LRCX",
+      "name": "Lam Research",
+      "subsector": "Equipment",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "MCHP",
+      "name": "Microchip Technology",
+      "subsector": "Microcontrollers",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "MPWR",
+      "name": "Monolithic Power Systems",
+      "subsector": "Power Management",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "MRVL",
+      "name": "Marvell Technology",
+      "subsector": "Data Infrastructure",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "MU",
+      "name": "Micron Technology",
+      "subsector": "Memory",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "subsector": "GPU/AI Chips",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "NXPI",
+      "name": "NXP Semiconductors",
+      "subsector": "Auto Chips",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "ON",
+      "name": "ON Semiconductor",
+      "subsector": "Power Management",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "QCOM",
+      "name": "Qualcomm",
+      "subsector": "Mobile Chips",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "QRVO",
+      "name": "Qorvo",
+      "subsector": "RF Chips",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "SLAB",
+      "name": "Silicon Laboratories",
+      "subsector": "IoT Chips",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "SNPS",
+      "name": "Synopsys",
+      "subsector": "EDA Software",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "STM",
+      "name": "STMicroelectronics",
+      "subsector": "Diversified",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "SWKS",
+      "name": "Skyworks Solutions",
+      "subsector": "RF Chips",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "TSM",
+      "name": "Taiwan Semiconductor",
+      "subsector": "Foundry",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    },
+    {
+      "ticker": "TXN",
+      "name": "Texas Instruments",
+      "subsector": "Analog Chips",
+      "sector": "Semiconductors",
+      "industry": "Semiconductors"
+    }
+  ]
+}
