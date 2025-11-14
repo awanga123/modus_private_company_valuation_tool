@@ -135,6 +135,26 @@ Artifacts:
 
 Every number in the summary is traceable back to the peer metrics stored in the audit file.
 
+ValuationRequest
+    ↓
+ValuationOrchestrator
+    ↓
+1. PeerSelector → List of tickers
+    ↓
+2. DataFetcher → PeerFinancials for each ticker
+    ↓
+3. MultipleCalculator → EV/Revenue and EV/EBITDA multiples
+    ↓
+4. StatsEngine → Filter outliers, calculate statistics
+    ↓
+5. Apply multiples to target company metrics
+    ↓
+6. DLOMAdjuster → Apply discount if configured
+    ↓
+7. AuditPersistence → Save complete audit trail
+    ↓
+ValuationResponse
+
 | Step | Description | Implemented in |
 | --- | --- | --- |
 | 1. Peer pool assembly | Manual tickers + sector matches (limit 10) using revenue filters | `services/peer_selector.py`, `models/company.PeerFilters` |
